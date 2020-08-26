@@ -4,11 +4,6 @@
 // 2. All letters in this word are not capitals, like "cherry"
 // 3. Only the first letter in this word is capitals, like "Hello"
 
-
-import UIKit
-
-var str = "Hello, Playground"
-
 func detectCapitalUse(_ word: String) -> Bool {
     if word.count > 0 {
         if word == word.uppercased() {
