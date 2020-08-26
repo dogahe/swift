@@ -9,7 +9,7 @@ import UIKit
 
 var str = "Hello, Playground"
 
-func detectCapitalUser(_ word: String) -> Bool {
+func detectCapitalUse(_ word: String) -> Bool {
     if word.count > 0 {
         if word == word.uppercased() {
             return true
@@ -32,4 +32,4 @@ func detectCapitalUser(_ word: String) -> Bool {
     }
 }
 
-detectCapitalUser(str)
+detectCapitalUse("USA")
