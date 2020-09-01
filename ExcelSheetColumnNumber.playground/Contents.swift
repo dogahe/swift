@@ -35,15 +35,20 @@ import Foundation
 
 func titleToNumber(_ s: String) -> Int {
     let length = s.count
+    var sum: Int = 0
     for i in 0..<length {
         let index = s.index(s.startIndex, offsetBy: i)
         let char = s[index]
-        
+        let A: Character = "A"
+        if let charVal = char.asciiValue, let aVal = A.asciiValue {
+            let number = charVal - aVal + 1
+            sum += Int(number) * Int(truncating: pow(26.0, length - i - 1) as NSNumber)
+        }
     }
-    return 0
+    return sum
 }
 
-let str = "AB"
+let str = "ZY"
 titleToNumber(str)
 
 
