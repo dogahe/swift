@@ -56,7 +56,8 @@ func pathSum(_ root: TreeNode?, _ sum: Int) -> Int {
         return 0
     }
 }
-let myTree: TreeNode = TreeNode(10, TreeNode(5, TreeNode(3, TreeNode(3), TreeNode(-2)), TreeNode(2, nil, TreeNode(1))), TreeNode(-3, nil, TreeNode(11)))
+//let myTree: TreeNode = TreeNode(10, TreeNode(5, TreeNode(3, TreeNode(3), TreeNode(-2)), TreeNode(2, nil, TreeNode(1))), TreeNode(-3, nil, TreeNode(11)))
 //let myTree: TreeNode = TreeNode(10, TreeNode(5), TreeNode(-3))
 //let myTree: TreeNode = TreeNode(10, TreeNode(5, TreeNode(1), TreeNode(2)), TreeNode(-3, nil, TreeNode(9)))
-pathSum(myTree, 8)
+let myTree: TreeNode = TreeNode(0, TreeNode(1), TreeNode(1))
+pathSum(myTree, 1)
