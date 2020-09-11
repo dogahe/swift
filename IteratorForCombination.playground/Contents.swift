@@ -32,11 +32,25 @@ class CombinationIterator {
     init(_ characters: String, _ combinationLength: Int) {
         letters = Array(characters)
         self.combinationLength = combinationLength
-        current = 
+        current = String(letters.prefix(combinationLength))
     }
     
     func next() -> String {
-        return ""
+        let currentToReturn = current
+
+        if let last = current.last {
+            if let indexOfLastLetter = letters.firstIndex(of: last) {
+                if indexOfLastLetter + 1 < combinationLength {
+                    let letterToReplace = letters[indexOfLastLetter + 1]
+                    current = String(current.dropLast())
+                    current.append(letterToReplace)
+                }
+            }
+
+        }
+
+        
+        return currentToReturn
     }
     
     func hasNext() -> Bool {
