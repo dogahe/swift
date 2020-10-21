@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         print(7, cr)
         printCutRodSolution(p: p, n: 9)
     }
-    
+        
     func cutRod(p: [Int], n: Int) -> Int {
         if n == 0 {
             return 0
