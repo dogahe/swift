@@ -10,6 +10,44 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    public class TreeNode {
+        public var val: Int
+        public var left: TreeNode?
+        public var right: TreeNode?
+        public init() { self.val = 0; self.left = nil; self.right = nil; }
+        public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+        public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+            self.val = val
+            self.left = left
+            self.right = right
+        }
+    }
+
+    func printBST(_ root: TreeNode?) {
+        if root == nil  {
+            return
+        }
+        printBST(root?.left)
+        print(root!.val)
+        printBST(root?.right)
+        
+    }
+
+    func insertIntoBST(_ root: inout TreeNode?, _ val: Int) -> TreeNode? {
+        if let root = root {
+            if val < root.val {
+                root.left = insertIntoBST(&root.left, val)
+            } else {
+                root.right = insertIntoBST(&root.right, val)
+            }
+            return root
+        } else {
+            root = TreeNode(val)
+            return root
+        }
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         //var p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 33, 37, 41, 45, 48, 51, 55, 56, 57, 60, 63, 66, 69, 72]
@@ -40,6 +78,25 @@ class ViewController: UIViewController {
         let cr = extendedBottomUpCutRod(p: p, n: 7)
         print(7, cr)
         printCutRodSolution(p: p, n: 9)
+        
+        
+        let values = [4,2,7,1,3]
+        let val = 5
+
+        var root: TreeNode? = nil
+
+        values.forEach { value in
+            insertIntoBST(&root, value)
+        }
+        print("####")
+        printBST(root)
+
+  
+
+        insertIntoBST(&root, val)
+        print("####")
+        printBST(root)
+        
     }
         
     func cutRod(p: [Int], n: Int) -> Int {
