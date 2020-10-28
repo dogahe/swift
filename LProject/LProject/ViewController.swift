@@ -46,10 +46,61 @@ class ViewController: UIViewController {
             return root
         }
     }
+    
+    
+    func findMinArrowShots(_ points: [[Int]]) -> Int {
+        var sortedByEnd = points.sorted {
+            if $0[1] == $1[1] {
+                return $0[0] <= $1[0]
+            } else {
+                return $0[1] < $1[1]
+            }
+        }
+        print(sortedByEnd)
+        var maxOverlap: Int = sortedByEnd[0][0] - 1
+        var shots: Int = 0
+        while sortedByEnd.count > 0 {
+            let firstBalloon = sortedByEnd[0]
+            if firstBalloon[0] <= maxOverlap && firstBalloon[1] >= maxOverlap {
+                sortedByEnd.remove(at: 0)
+                print(sortedByEnd)
+                continue
+            }
+            if sortedByEnd.count == 1 {
+                shots += 1
+                print(shots)
+                sortedByEnd.remove(at: 0)
+                print(sortedByEnd)
+            } else {
+                let secondBalloon = sortedByEnd[1]
+                if firstBalloon[1] >= secondBalloon[0] {
+                    maxOverlap = min(firstBalloon[1], secondBalloon[1])
+                    shots += 1
+                    print(shots)
+                    sortedByEnd.remove(at: 0)
+                    print(sortedByEnd)
+                    sortedByEnd.remove(at: 0)
+                    print(sortedByEnd)
+                } else {
+                    shots += 1
+                    print(shots)
+                    sortedByEnd.remove(at: 0)
+                    print(sortedByEnd)
+                }
+            }
+        }
+        return shots
+    }
+
+
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let points = [[1,9],[7,16],[2,5],[7,12],[9,11],[2,10],[9,16],[3,9],[1,3]]
+
+        findMinArrowShots(points)
         //var p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 33, 37, 41, 45, 48, 51, 55, 56, 57, 60, 63, 66, 69, 72]
         
         var p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
