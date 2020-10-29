@@ -92,11 +92,44 @@ class ViewController: UIViewController {
         return shots
     }
 
+    func removeDuplicateLetters(_ s: String) -> String {
+       
+        var lastIndex: [Int] = Array(repeating: -1, count: 26)
+        for index in 0..<s.count {
+            let letter = s[s.index(s.startIndex, offsetBy: index)]
+            lastIndex[Int(letter.asciiValue! - Character("a").asciiValue!)] = index
+        }
+        print(lastIndex)
+        
+        var used: [Bool] = Array(repeating: false, count: 26)
+        
+        var result: String = ""
+        for index in 0..<s.count {
+            print(index)
+            let letter = s[s.index(s.startIndex, offsetBy: index)]
+            print(letter)
+            if used[Int(letter.asciiValue! - Character("a").asciiValue!)] {
+                continue
+            }
+            print(result.last)
+            while result.count > 0 && (result.last ?? Character("-")) > letter && lastIndex[Int(result.last!.asciiValue! - Character("a").asciiValue!)] > index {
+                used[Int(result.last!.asciiValue! - Character("a").asciiValue!)] = false
+                result.removeLast()
+            }
+            result.append(letter)
+            print(result)
+            used[Int(letter.asciiValue! - Character("a").asciiValue!)] = true
+            print(used)
+        }
+        return result
+    }
 
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(removeDuplicateLetters("cbacdcbc"))
         
         let points = [[1,9],[7,16],[2,5],[7,12],[9,11],[2,10],[9,16],[3,9],[1,3]]
 
