@@ -25,6 +25,8 @@
  0 <= nums.length <= 100
  0 <= nums[i] <= 400
  
+ https://medium.com/@axionoso/solving-house-robber-algorithm-dynamicprogramming-ad17dc3581cd
+ 
  */
 
 import Foundation
