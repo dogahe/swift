@@ -22,7 +22,7 @@ class ViewController: UIViewController {
             self.right = right
         }
     }
-
+    
     func printBST(_ root: TreeNode?) {
         if root == nil  {
             return
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         printBST(root?.right)
         
     }
-
+    
     func insertIntoBST(_ root: inout TreeNode?, _ val: Int) -> TreeNode? {
         if let root = root {
             if val < root.val {
@@ -91,9 +91,9 @@ class ViewController: UIViewController {
         }
         return shots
     }
-
+    
     func removeDuplicateLetters(_ s: String) -> String {
-       
+        
         var lastIndex: [Int] = Array(repeating: -1, count: 26)
         for index in 0..<s.count {
             let letter = s[s.index(s.startIndex, offsetBy: index)]
@@ -123,8 +123,8 @@ class ViewController: UIViewController {
         }
         return result
     }
-
-
+    
+    
     
     
     func rob(_ nums: [Int]) -> Int {
@@ -143,8 +143,8 @@ class ViewController: UIViewController {
         }
         return house.last!
     }
-
-
+    
+    
     func atMostNGivenDigitSet(_ digits: [String], _ n: Int) -> Int {
         var output: String = ""
         var results: [String] = []
@@ -158,12 +158,12 @@ class ViewController: UIViewController {
             results.append(output)
             print(output)
             
-//            if let num = Int(output) {
-//                if num < n {
-//                    results.append(output)
-//                    print(output)
-//                }
-//            }
+            //            if let num = Int(output) {
+            //                if num < n {
+            //                    results.append(output)
+            //                    print(output)
+            //                }
+            //            }
             return
         }
         for digit in digits {
@@ -174,19 +174,137 @@ class ViewController: UIViewController {
         output = ""
         doCreate(output: &output, digits: digits, level: level + 1, results: &results, n: n)
     }
-
-
-
-
+    
+    func calculate(_ s: String) -> Int {
+        //let ex = s.trimmingCharacters(in: .whitespaces)
+        let ex = String(s.filter { !" ".contains($0) })
+        var operands: [Int] = []
+        var operations: [Character] = []
+        var num: Int = 0
+        var i: Int = 0
+        while i < ex.count {
+            let c = ex[ex.index(ex.startIndex, offsetBy: i)]
+            if c.isNumber {
+                num = num * 10 + Int(String(c))!
+            } else {
+                operands.append(num)
+                num = 0
+                if (c == "+" || c == "-") || ((c == "*" || c == "/") && (operations.last == "*" || operations.last == "/")) {
+                    if operations.count > 0 && operands.count > 1 {
+                        let two = operands.removeLast()
+                        let one = operands.removeLast()
+                        let operation = operations.removeLast()
+                        var result: Int
+                        if operation == "*" {
+                            result = one * two
+                        } else if operation == "+" {
+                            result = one + two
+                        } else if operation == "-" {
+                            result = one - two
+                        } else {
+                            result = one / two
+                        }
+                        operands.append(result)
+                    }
+                }
+                operations.append(c)
+            }
+            i += 1
+        }
+        operands.append(num)
+        while operations.count > 0 && operands.count > 1 {
+            let two = operands.removeLast()
+            let one = operands.removeLast()
+            let operation = operations.removeLast()
+            var result: Int
+            if operation == "*" {
+                result = one * two
+            } else if operation == "+" {
+                result = one + two
+            } else if operation == "-" {
+                result = one - two
+            } else {
+                result = one / two
+            }
+            operands.append(result)
+        }
+        return operands.last!
+    }
+    
+    func getSkyline(_ buildings: [[Int]]) -> [[Int]] {
+        if buildings.count == 0 {
+            return []
+        } else if buildings.count == 1 {
+            if buildings[0].count == 3 {
+                return [[buildings[0][0], buildings[0][2]], [buildings[0][1], 0]]
+            } else {
+                return []
+            }
+        }
+        
+        var edges: [Int] = []
+        buildings.forEach { building in
+            edges.append(building[0])
+            edges.append(building[1])
+        }
+        edges = Array(Set(edges))
+        edges.sort()
+        
+        let leftMost = edges[0]
+        let rightMost = edges.last!
+        var skies: [Int] = []
+        var index: Int = 0
+        while index < edges.count - 1 {
+            let left = edges[index]
+            let right = edges[index + 1]
+            var sky: Int = 0
+            for building in buildings {
+                if (right > building[0] && left < building[1]) || (left < building[1] && right > building[0]) {
+                    sky = max(sky, building[2])
+                }
+            }
+            skies.append(sky)
+            index += 1
+        }
+        print(skies)
+        
+        var lastSky: Int = skies[0]
+        var lastEdge: Int = edges[0]
+        index = 1
+        var output: [[Int]] = []
+        while index < skies.count {
+            let sky = skies[index]
+            print(sky)
+            if sky != lastSky {
+                output.append([lastEdge, lastSky])
+                lastSky = sky
+                lastEdge = edges[index]
+            }
+            index += 1
+        }
+        output.append([lastEdge, lastSky])
+        output.append([rightMost, 0])
+        return output
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        var b: [[Int]] = [[]]//[[0,2,3],[2,5,3]]//[[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]] //[[1,2,1],[2147483646,2147483647,2147483647]]//[ [2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8] ]
+        
+        print(getSkyline(b))
+        
+        let s = "1*2-3/4+5*6-7*8+9/10"
+        //let s = "2*3+4"
+        calculate(s)
         
         let digits = ["1","3","5","7"]
         let n = 100
         atMostNGivenDigitSet(digits, n)
         
         let nums = [226,174,214,16,218,48,153,131,128,17,157,142,88,43,37,157,43,221,191,68,206,23,225,82,54,118,111,46,80,49,245,63,25,194,72,80,143,55,209,18,55,122,65,66,177,101,63,201,172,130,103,225,142,46,86,185,62,138,212,192,125,77,223,188,99,228,90,25,193,211,84,239,119,234,85,83,123,120,131,203,219,10,82,35,120,180,249,106,37,169,225,54,103,55,166,124]
-
+        
         print("Robbed: \(rob(nums))")
         
         
@@ -194,7 +312,7 @@ class ViewController: UIViewController {
         print(removeDuplicateLetters("cbacdcbc"))
         
         let points = [[1,9],[7,16],[2,5],[7,12],[9,11],[2,10],[9,16],[3,9],[1,3]]
-
+        
         findMinArrowShots(points)
         //var p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30, 33, 37, 41, 45, 48, 51, 55, 56, 57, 60, 63, 66, 69, 72]
         
@@ -228,23 +346,23 @@ class ViewController: UIViewController {
         
         let values = [4,2,7,1,3]
         let val = 5
-
+        
         var root: TreeNode? = nil
-
+        
         values.forEach { value in
             insertIntoBST(&root, value)
         }
         print("####")
         printBST(root)
-
-  
-
+        
+        
+        
         insertIntoBST(&root, val)
         print("####")
         printBST(root)
         
     }
-        
+    
     func cutRod(p: [Int], n: Int) -> Int {
         if n == 0 {
             return 0
@@ -255,7 +373,7 @@ class ViewController: UIViewController {
         }
         return q
     }
-
+    
     func memoizedCutRod(p: [Int], n: Int) -> Int {
         var r: [Int] = Array(repeating: -1, count: n + 1)
         return memoizedCutRodAux(p: p, n: n, r: &r)
@@ -277,7 +395,7 @@ class ViewController: UIViewController {
         r[n] = q
         return q
     }
-
+    
     func bottomUpCutRod(p: [Int], n: Int) -> Int {
         var r: [Int] = Array(repeating: -1, count: n + 1)
         r[0] = 0
@@ -307,7 +425,7 @@ class ViewController: UIViewController {
         }
         return (r[n], s)
     }
-
+    
     
     func printCutRodSolution(p: [Int], n: Int) {
         let (r, s) = extendedBottomUpCutRod(p: p, n: n)
@@ -318,6 +436,6 @@ class ViewController: UIViewController {
             n1 = n1 - s[n1 - 1]
         }
     }
-
+    
 }
 
