@@ -35,25 +35,24 @@ public class TreeNode {
 
 func increasingBST(_ root: TreeNode?) -> TreeNode? {
     var newNode: TreeNode? = nil
-    helper(root, &newNode)
+    var curr: TreeNode? = nil
+    helper(root, &newNode, &curr)
     return newNode
 }
 
-func helper(_ node: TreeNode?, _ constructed: inout TreeNode?) {
+func helper(_ node: TreeNode?, _ constructed: inout TreeNode?, _ curr: inout TreeNode?) {
     if node == nil  {
         return
     }
-    helper(node!.left, &constructed)
+    helper(node!.left, &constructed, &curr)
     if constructed == nil {
         constructed = TreeNode(node!.val)
+        curr = constructed
     } else {
-        var rightNode = constructed
-        while rightNode?.right != nil {
-            rightNode = rightNode?.right
-        }
-        rightNode?.right = TreeNode(node!.val)
+        curr?.right = TreeNode(node!.val)
+        curr = curr?.right
     }
-    helper(node!.right, &constructed)
+    helper(node!.right, &constructed, &curr)
 }
 
 func printTree(_ root: TreeNode?) {
