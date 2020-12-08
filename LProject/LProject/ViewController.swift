@@ -287,9 +287,61 @@ class ViewController: UIViewController {
         return output
     }
     
+    func generateMatrix(_ n: Int) -> [[Int]] {
+        var matrix: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
+        var minRow = 0
+        var maxRow = n
+        var minCol = -1
+        var maxCol = n
+        var dir = (0, 1)
+        var row = 0
+        var col = 0
+        for num in 1 ... n*n {
+            print(num)
+            matrix[row][col] = num
+            row += dir.0
+            col += dir.1
+            print(row, col)
+            if dir == (0, 1) {
+                if col == maxCol {
+                    row += 1
+                    col = maxCol - 1
+                    maxCol -= 1
+                    dir = (1, 0)
+                }
+            } else if dir == (1, 0) {
+                if row == maxRow {
+                    row = maxRow - 1
+                    col -= 1
+                    maxRow -= 1
+                    dir = (0, -1)
+                }
+            } else if dir == (0, -1) {
+                if col == minCol {
+                    row -= 1
+                    col = minCol +  1
+                    minCol += 1
+                    dir = (-1, 0)
+                }
+            } else if dir == (-1, 0) {
+                if row == minRow {
+                    row = minRow + 1
+                    minRow += 1
+                    col += 1
+                    dir = (0, 1)
+                }
+            }
+        }
+        return matrix
+    }
+
+
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        generateMatrix(3)
         
         var b: [[Int]] = [[]]//[[0,2,3],[2,5,3]]//[[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]] //[[1,2,1],[2147483646,2147483647,2147483647]]//[ [2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8] ]
         
