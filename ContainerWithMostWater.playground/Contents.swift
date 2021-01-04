@@ -1,3 +1,6 @@
+/*
+ 
+ */
 import Foundation
 
 func maxArea(_ height: [Int]) -> Int {

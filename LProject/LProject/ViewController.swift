@@ -374,9 +374,50 @@ class ViewController: UIViewController {
         return String(s[s.index(s.startIndex, offsetBy: start) ... s.index(s.startIndex, offsetBy: start + maxLength - 1)])
      
     }
-
+    
+    
+    func largestRectangleArea(_ heights: [Int]) -> Int {
+        var stack: [Int] = []
+        var maxArea = 0
+        var area = 0
+        var i = 0
+        while i < heights.count {
+            if stack.isEmpty || heights.last ?? -1 <= heights[i] {
+                stack.append(i)
+                i += 1
+                print(stack)
+            } else {
+                let top = stack.popLast()
+                if stack.isEmpty {
+                    area = heights[top!] * i
+                } else {
+                    area = heights[top!] * (i  - stack.last! - 1)
+                }
+                maxArea = max(maxArea, area)
+            }
+        }
+        while !stack.isEmpty {
+            let top = stack.popLast()
+            if stack.isEmpty {
+                area = heights[top!] * i
+            } else {
+                area = heights[top!] * (i  - stack.last! - 1)
+            }
+            maxArea = max(maxArea, area)
+        }
+        
+        return maxArea
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let h =  [2, 1, 2, 3, 1]//[2,1,5,6,2,3]
+
+        print(largestRectangleArea(h))
+        
+        
         
         let s11 = "ccc"//"forgeeksskeegfor"//"babad"
         longestPalindrome(s11)
