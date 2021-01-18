@@ -48,7 +48,6 @@ func maxOperations(_ nums: [Int], _ k: Int) -> Int {
     let sortedKeys = Array(dict.keys).sorted(by: <)
     for key1 in sortedKeys {
         if let val1 = dict[key1] {
-            print(key1, val1)
             let key2 = k - key1
             if key2 < key1 {
                 break
@@ -65,7 +64,7 @@ func maxOperations(_ nums: [Int], _ k: Int) -> Int {
     return ops
 }
 
-let nums = [2,2,2,3,1,1,4,1]
-let k = 4
+let nums = [1,2,3,4]
+let k = 5
 
 maxOperations(nums, k)
