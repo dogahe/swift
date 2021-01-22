@@ -59,7 +59,7 @@ func doesAddUp(_ soFar: inout [Int], _ target: Int, _ candidates: [Int], _ start
     if sum == target {
         results.append(soFar)
     } else {
-        for index in startIndex..<candidates.count {
+        for index in startIndex ..< candidates.count {
             let candidate = candidates[index]
             if candidate > target - sum {
                 continue
@@ -71,8 +71,8 @@ func doesAddUp(_ soFar: inout [Int], _ target: Int, _ candidates: [Int], _ start
     }
 }
 
-let candidates = [2,3,5]
-let target = 8
+let candidates = [2,3,6,7]
+let target = 7
 
 print(combinationSum(candidates, target))
 
