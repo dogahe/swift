@@ -1,42 +1,12 @@
-//
-//  main.swift
-//  NQueen
-//
-//  Created by Behzad Dogahe on 1/21/21.
-//
 
-import Foundation
-
-func solveNQueen(_ N: Int) {
-    var board: [[Int]] = Array(repeating: Array(repeating: 0, count: N), count: N)
+func solveNQueens(_ n: Int) -> [[String]] {
+    var board: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: n)
     var solutions: [[[Int]]] = []
     if !solveAllNQueenUtil(0, &board, &solutions) {
         print("There is no solution")
     }
-    for solution in solutions {
-        printBoard(solution)
-    }
-    
     let leet = convertToLeetCodeStyleAnswer(solutions)
-    print(leet)
-}
-
-func solveNQueenUtil(_ row: Int, _ board: inout [[Int]]) -> Bool {
-    if row == board.count {
-        printBoard(board)
-        return true
-    }
-    for col in 0 ..< board.count {
-        if isSafe(row, col, board) {
-            board[row][col] = 1
-            if solveNQueenUtil(row + 1, &board) {
-                return true
-            } else {
-                board[row][col] = 0
-            }
-        }
-    }
-    return false
+    return leet
 }
 
 func solveAllNQueenUtil(_ row: Int, _ board: inout [[Int]], _ solutions: inout [[[Int]]]) -> Bool {
@@ -70,17 +40,6 @@ func isSafe(_ x: Int, _ y: Int, _ board: [[Int]]) -> Bool {
     return true
 }
 
-func printBoard(_ board: [[Int]]) {
-    var str: String = ""
-    for x in 0 ..< board.count {
-        for y in 0 ..< board.count {
-            str += "\(board[x][y]) "
-        }
-        str += "\n"
-    }
-    print(str)
-}
-
 func convertToLeetCodeStyleAnswer(_ solutions: [[[Int]]]) -> [[String]] {
     var leetCodeSolutions: [[String]] = []
     for solution in solutions {
@@ -101,5 +60,4 @@ func convertToLeetCodeStyleAnswer(_ solutions: [[[Int]]]) -> [[String]] {
     return leetCodeSolutions
 }
 
-solveNQueen(8)
-
+print(solveNQueens(4))
