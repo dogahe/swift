@@ -1,16 +1,28 @@
-// 208. Implement Trie (Prefix Tree)
-// Implement a trie with insert, search, and startsWith methods.
-// Example:
-// Trie trie = new Trie();
-// trie.insert("apple");
-// trie.search("apple");   // returns true
-// trie.search("app");     // returns false
-// trie.startsWith("app"); // returns true
-// trie.insert("app");
-// trie.search("app");     // returns true
-// Note:
-// You may assume that all inputs are consist of lowercase letters a-z.
-// All inputs are guaranteed to be non-empty strings.
+//
+//  main.swift
+//  Trie
+//
+//  Created by Behzad Dogahe on 1/26/21.
+//
+/**
+ 208. Implement Trie (Prefix Tree)
+ Implement a trie with insert, search, and startsWith methods.
+
+ Example:
+
+ Trie trie = new Trie();
+
+ trie.insert("apple");
+ trie.search("apple");   // returns true
+ trie.search("app");     // returns false
+ trie.startsWith("app"); // returns true
+ trie.insert("app");
+ trie.search("app");     // returns true
+ Note:
+
+ You may assume that all inputs are consist of lowercase letters a-z.
+ All inputs are guaranteed to be non-empty strings.
+ */
 
 import Foundation
 
@@ -92,4 +104,6 @@ let ret_2: Bool = obj.search("beh")
 print(ret_2)
 let ret_3: Bool = obj.startsWith("behf")
 print(ret_3)
- 
+
+
+
