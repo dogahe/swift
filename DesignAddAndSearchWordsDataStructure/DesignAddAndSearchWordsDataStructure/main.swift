@@ -56,57 +56,60 @@ class WordDictionary {
         }
     }
     
-    func insert(_ word: String) {
-        var pChild: WordDictionary? = self
+    func addWord(_ word: String) {
+        var curr: WordDictionary? = self
         for i in 0 ..< word.count {
             let index = word.index(word.startIndex, offsetBy: i)
             let char = word[index]
             let A: Character = "a"
             if let charVal = char.asciiValue, let aVal = A.asciiValue {
                 let childIndex = Int(charVal - aVal)
-                if pChild?.children[childIndex] == nil {
-                    pChild?.children[childIndex] = WordDictionary()
+                if curr?.children[childIndex] == nil {
+                    curr?.children[childIndex] = WordDictionary()
                 }
-                pChild = pChild?.children[childIndex]
+                curr = curr?.children[childIndex]
             }
         }
-        pChild?.isLeaf = true
+        curr?.isLeaf = true
     }
     
     /** Returns if the word is in the trie. */
     func search(_ word: String) -> Bool {
-        var pChild: WordDictionary? = self
+        var curr: WordDictionary? = self
         for i in 0 ..< word.count {
             let index = word.index(word.startIndex, offsetBy: i)
             let char = word[index]
-            
+            if char == "." {
+                for child in curr!.children {
+                    let newWord = String(word.suffix(word.count - (i + 1)))
+                    if child != nil && child!.search(newWord) {
+                        return true
+                    }
+                }
+                return false
+            }
             let A: Character = "a"
             if let charVal = char.asciiValue, let aVal = A.asciiValue {
                 let childIndex = Int(charVal - aVal)
-                if pChild?.children[childIndex] == nil {
+                if curr?.children[childIndex] == nil {
                     return false
                 }
-                pChild = pChild?.children[childIndex]
+                curr = curr?.children[childIndex]
             }
         }
-        if let isLeaf = pChild?.isLeaf {
+        if let isLeaf = curr?.isLeaf {
             return isLeaf
         }
         return false
     }
 }
 
-
-
 let obj = WordDictionary()
-obj.insert("bad")
-obj.insert("dad")
-obj.insert("mad")
+obj.addWord("badass")
+//obj.addWord("dad")
+obj.addWord("mad")
 
-
-print(obj.search("pad"))
-print(obj.search("bad"))
+print(obj.search("bada.s"))
 print(obj.search("dad"))
-
 
 
