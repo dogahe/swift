@@ -95,12 +95,14 @@ public class BreadthFirstPaths {
     private var edgeTo: [Int]      // edgeTo[v] = previous edge on shortest s-v path
     private var distTo: [Int]      // distTo[v] = number of edges shortest s-v path
     private var parent: [Int?]
+    private var treePathFromSource: [Int]
     
     public init(_ g: Graph, _ s: Int) {
         marked = Array(repeating: false, count: g.V)
         distTo = Array(repeating: 0, count: g.V)
         edgeTo = Array(repeating: 0, count: g.V)
         parent = Array(repeating: nil, count: g.V)
+        treePathFromSource = []
         bfs(g, s)
     }
     
@@ -115,6 +117,7 @@ public class BreadthFirstPaths {
         q.append(s)
         while !q.isEmpty {
             let v = q.removeFirst()
+            treePathFromSource.append(v)
             for w in g.adj[v] {
                 if !marked[w] {
                     edgeTo[w] = v
@@ -152,6 +155,10 @@ public class BreadthFirstPaths {
         }
         path.append(x)
         return path
+    }
+    
+    func treePath() -> [Int] {
+        return treePathFromSource
     }
 }
 
@@ -314,8 +321,8 @@ print("==================")
 print("Depth First Path")
 print("==================")
 
-//let dfsPath: DepthFirstPaths = DepthFirstPaths(g2, s2)
-let dfsPath: DepthFirstPaths = DepthFirstPaths(g2)
+let dfsPath: DepthFirstPaths = DepthFirstPaths(g2, s2)
+//let dfsPath: DepthFirstPaths = DepthFirstPaths(g2)
 
 for v in 0 ..< g2.V {
     if dfsPath.hasPathTo(v) {
@@ -351,3 +358,13 @@ for v in 0 ..< g2.V {
         print("\(s2) to \(v):  not connected")
     }
 }
+
+
+// Examples from Geeks For Geeks:
+// https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
+print("=====  G3   ===== ")
+let g3  = Graph(["4", "6", "0 1", "0 2", "1 2", "2 0", "2 3", "3 3"], isDirected: true)
+print(g3)
+let bfs3: BreadthFirstPaths = BreadthFirstPaths(g3, 2)
+print(bfs3.treePath())
+

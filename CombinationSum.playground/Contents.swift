@@ -71,8 +71,31 @@ func doesAddUp(_ soFar: inout [Int], _ target: Int, _ candidates: [Int], _ start
     }
 }
 
-let candidates = [2,3,6,7]
-let target = 7
+func combinationSumDFS(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    var result: [[Int]] = []
+    dfs(candidates, [], 0, target, &result)
+    return result
+}
+
+func dfs(_ candidates: [Int], _ curr: [Int], _ index: Int, _ target: Int, _ result: inout [[Int]]) {
+    if target == 0 {
+        result.append(curr)
+        return
+    } else if target < 0 {
+        return
+    }
+    for i in index ..< candidates.count {
+        let candidate = candidates[i]
+        var newCurr = curr
+        newCurr.append(candidate)
+        dfs(candidates, newCurr, i, target - candidate, &result)
+    }
+}
+
+let candidates = [2,3,5]
+let target = 8
 
 print(combinationSum(candidates, target))
+
+print(combinationSumDFS(candidates, target))
 
