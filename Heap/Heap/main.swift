@@ -7,30 +7,26 @@
 
 import Foundation
 
-struct Heap<T: Comparable> {
+class Heap<T: Comparable> {
     var heapSize: Int
     var a: [T]
-    init(_ a: [T]) {
-        heapSize = a.count
-        self.a = []
-        var aCopy = a
+    init(_ keys: [T]) {
+        heapSize = keys.count
+        a = keys
         for i in stride(from: Int(floor(Double(a.count)/2)) - 1, to: -1, by: -1) {
-            maxHeapify(&aCopy, i)
+            maxHeapify(i)
         }
-        self.a = aCopy
     }
     
-    init(_ a: [T], _ heapSize: Int) {
+    init(_ keys: [T], _ heapSize: Int) {
         self.heapSize = heapSize
-        self.a = []
-        var aCopy = a
+        a = keys
         for i in stride(from: Int(floor(Double(a.count)/2)) - 1, to: -1, by: -1) {
-            maxHeapify(&aCopy, i)
+            maxHeapify(i)
         }
-        self.a = aCopy
     }
     
-    func maxHeapify(_ a: inout [T], _ i: Int) {
+    func maxHeapify(_ i: Int) {
         let l = 2 * i + 1
         let r = 2 * i + 2
         var largest: Int
@@ -46,23 +42,23 @@ struct Heap<T: Comparable> {
             let temp = a[largest]
             a[largest] = a[i]
             a[i] = temp
-            maxHeapify(&a, largest)
+            maxHeapify(largest)
         }
     }
     
-    mutating func heapSort() -> [T] {
+    func heapSort() -> [T] {
         for i in stride(from: a.count - 1, to: 0, by: -1) {
             let temp = a[0]
             a[0] = a[i]
             a[i] = temp
             heapSize = heapSize - 1
-            maxHeapify(&a, 0)
+            maxHeapify(0)
         }
         return a
     }
 }
 
-let a: [Int] = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
+var a: [Int] = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
 var heap = Heap(a)
 let b = heap.a
 print(b)
@@ -70,3 +66,7 @@ print(b)
 let sorted = heap.heapSort()
 print(sorted)
 
+a = [5, 3, 17, 10, 84, 19, 6, 22, 9]
+heap = Heap(a)
+print(heap.a)
+print(heap.heapSort())
