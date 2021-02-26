@@ -1,8 +1,8 @@
 //
 //  main.swift
-//  DijkstraSP
+//  DijkstraUndirectedSP
 //
-//  Created by Behzad Dogahe on 2/23/21.
+//  Created by Behzad Dogahe on 2/25/21.
 //
 
 import Foundation
@@ -36,17 +36,10 @@ struct Edge: Hashable, CustomStringConvertible, Comparable {
     }
 }
 
-public class EdgeWeightedDigraph: CustomStringConvertible {
+public class EdgeWeightedGraph: CustomStringConvertible {
     final var V: Int
     var E: Int
     var adj: [Set<Edge>] = []
-    
-    //  Initializes an empty edge-weighted digraph with v vertices and 0 edges.
-    public init(_ v: Int) {
-        V = v
-        E = 0
-        adj = Array(repeating: [], count: V)
-    }
     
     public init(_ edgeArray: [String], isDirected: Bool = false) {
         V = 0
@@ -105,6 +98,7 @@ public class EdgeWeightedDigraph: CustomStringConvertible {
     func addEdge(_ e: Edge) {
         print("Add Edge \(e.v), \(e.w) - \(e.weight)")
         adj[e.v].insert(e)
+        adj[e.w].insert(e)
     }
     
     var edges: Set<Edge> {
@@ -248,7 +242,7 @@ public class DijkstraSP {
     private var edgeTo: [Edge?] = []   // edgeTo[v] = last edge on shortest s->v path
     private var pq: IndexMinPQ         // priority queue of vertices
     
-    public init(_ g: EdgeWeightedDigraph, _ s: Int) {
+    public init(_ g: EdgeWeightedGraph, _ s: Int) {
         distTo = Array(repeating: Double.infinity, count: g.V)
         edgeTo = Array(repeating: nil, count: g.V)
         distTo[s] = 0.0
@@ -259,15 +253,14 @@ public class DijkstraSP {
         while !pq.isEmpty() {
             let v = pq.delMin()
             for e in g.adj[v!] {
-                relax(e)
+                relax(e, v!)
             }
         }
     }
     
     // relax edge e and update pq if changed
-    func relax(_ e: Edge) {
-        let v = e.from()
-        let w = e.to()
+    func relax(_ e: Edge, _ v: Int) {
+        let w = e.other(v)
         if distTo[w] > distTo[v] + e.weight {
             distTo[w] = distTo[v] + e.weight
             edgeTo[w] = e;
@@ -293,9 +286,11 @@ public class DijkstraSP {
         }
         var path: [Edge] = []
         var e: Edge? = edgeTo[v]
+        var x = v
         while e != nil {
             path.insert(e!, at: 0)
-            e = edgeTo[e!.from()]
+            x = e!.other(x)
+            e = edgeTo[x]
         }
         return path
     }
@@ -303,8 +298,8 @@ public class DijkstraSP {
 }
 
 
-//let g  = EdgeWeightedDigraph("https://algs4.cs.princeton.edu/44sp/tinyEWD.txt")
-let g  = EdgeWeightedDigraph(["9", "14", "0 1 4", "1 2 8", "2 3 7", "3 4 9", "4 5 10", "5 6 2", "6 7 1", "7 0 8", "3 5 14", "2 5 4", "6 8 6", "7 8 7", "7 1 11", "8 2 2"])
+//let g  = EdgeWeightedGraph("https://algs4.cs.princeton.edu/43mst/tinyEWG.txt")
+let g  = EdgeWeightedGraph(["9", "14", "0 1 4", "1 2 8", "2 3 7", "3 4 9", "4 5 10", "5 6 2", "6 7 1", "7 0 8", "3 5 14", "2 5 4", "6 8 6", "7 8 7", "7 1 11", "8 2 2"])
 print(g)
 let s: Int = 0
 let sp: DijkstraSP = DijkstraSP(g, s)
