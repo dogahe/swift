@@ -53,12 +53,10 @@ func helper(_ node: TreeNode?, level: Int, arr: inout [[Int]]) {
     }
     if level == arr.count {
         arr.append([node!.val])
-        print("A. \(arr)")
     } else {
         var a = arr[level]
         a.append(node!.val)
         arr[level] = a
-        print("B. \(arr)")
     }
     helper(node!.left, level: level + 1, arr: &arr)
     helper(node!.right, level: level + 1, arr: &arr)
@@ -67,3 +65,9 @@ func helper(_ node: TreeNode?, level: Int, arr: inout [[Int]]) {
 let myTree: TreeNode = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
 
 averageOfLevels(myTree)
+
+
+let a = 12
+let b = 45
+let s = a ^ b
+let c = (a & b) << 1
