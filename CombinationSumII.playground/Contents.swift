@@ -42,7 +42,8 @@ import Foundation
 
 func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
     var result: [[Int]] = []
-    dfs(candidates, [], 0, target, &result)
+    let sortedCandidates = candidates.sorted()
+    dfs(sortedCandidates, [], 0, target, &result)
     return result
 }
 
@@ -53,19 +54,19 @@ func dfs(_ candidates: [Int], _ curr: [Int], _ index: Int, _ target: Int,  _ res
     } else if target < 0 {
         return
     }
+    var selected: Set<Int> = []
     for i in index ..< candidates.count {
         let candidate = candidates[i]
-        if !curr.contains(candidate) {
+        if candidate <= target && !selected.contains(candidate) {
+            selected.insert(candidate)
             var newCurr = curr
             newCurr.append(candidate)
-            var newCandidates = candidates
-            newCandidates.remove(at: i)
-            dfs(newCandidates, newCurr, i, target - candidate, &result)
+            dfs(candidates, newCurr, i + 1, target - candidate, &result)
         }
     }
 }
 
-let candidates = [10,1,2,7,6,1,5]
-let target = 8
+let candidates = [2,5,2,1,2] //[10,1,2,7,6,1,5]
+let target = 5//8
 
 print(combinationSum2(candidates, target))
