@@ -64,66 +64,31 @@ func canJumpHelper(_ nums: [Int], _ curr: Int, _ jumps: Int, _ results: inout [I
 let nums = [3,2,1,0,4]//[9,8,2,2,0,2,2,0,4,1,5,7,9,6,6,0,6,5,0,5]
 print(canJump(nums))
 
-func rotate(_ matrix: inout [[Int]]) {
-    let n = matrix.count
-    for row in 0 ..< (n + 1)/2 {
-        for col in 0 ..< n/2 {
-            let temp = matrix[n - 1 - col][row]
-            matrix[n - 1 - col][row] = matrix[n - 1 - row][n - 1 - col]
-            matrix[n - 1 - row][n - 1 - col] = matrix[col][n - 1 - row]
-            matrix[col][n - 1 - row] = matrix[row][col]
-            matrix[row][col] = temp
-        }
-    }
+func minPathSum(_ grid: [[Int]]) -> Int {
+    let m = grid.count
+    let n = grid[0].count
+    var sum: [[Int]] = Array(repeating: Array(repeating: -1, count: n), count: m)
+    let result = helper(m - 1, n - 1, &sum, grid)
+    return result
 }
 
-var matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]//[[1,2,3],[4,5,6],[7,8,9]]
-rotate(&matrix)
-print(matrix)
-
-func spiralOrder(_ matrix: [[Int]]) -> [Int] {
-    let m = matrix.count
-    let n = matrix[0].count
-    var minRow = 1
-    var maxRow = m - 1
-    var minCol = 0
-    var maxCol = n - 1
-    var dir = (0, 1)
-    var row = 0
-    var col = -1
-    var output: [Int] = []
-    var moves = 0
-    while moves < m*n {
-        if dir == (0, 1) {
-            if col == maxCol {
-                maxCol -= 1
-                dir = (1, 0)
-            }
-        } else if dir == (1, 0) {
-            if row == maxRow {
-                maxRow -= 1
-                dir = (0, -1)
-            }
-        } else if dir == (0, -1) {
-            if col == minCol {
-                minCol += 1
-                dir = (-1, 0)
-            }
-        } else if dir == (-1, 0) {
-            if row == minRow {
-                minRow += 1
-                dir = (0, 1)
-            }
-        }
-        row += dir.0
-        col += dir.1
-        print(moves, row, col, dir)
-        output.append(matrix[row][col])
-        moves += 1
+func helper(_ m: Int, _ n: Int, _ sum: inout [[Int]], _ grid: [[Int]]) -> Int {
+    if m < 0 || n < 0 {
+        return Int.max
     }
-    return output
+    
+    if m == 0 && n == 0 {
+        sum[m][n] = grid[m][n]
+        return sum[m][n]
+    }
+    
+    let last =  min(helper(m - 1, n, &sum, grid), helper(m, n - 1, &sum, grid))
+    let result = grid[m][n] + last
+    sum[m][n] = result
+    return result
 }
-//let matrix1 = [[1,2,3],[4,5,6],[7,8,9]]
-let matrix1 = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
-let spiral = spiralOrder(matrix1)
-print(spiral)
+
+let grid = [[1,2,3],[4,5,6]]//[[1,3,1],[1,5,1],[4,2,1]]
+
+let x = minPathSum(grid)
+print(x)
