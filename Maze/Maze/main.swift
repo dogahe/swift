@@ -74,3 +74,35 @@ let maze: [[Int]] =  [ [1, 1, 1, 0, 1, 1],
 
 solveMaze(maze)
 
+
+func uniquePaths(_ m: Int, _ n: Int) -> Int {
+    var path: [[Int]] = Array(repeating: Array(repeating: 0, count: n), count: m)
+    path[0][0] = 1
+    var paths: [[[Int]]] = []
+    uniquePathsUtil(0, 0, m, n, &path, &paths)
+    return paths.count
+}
+
+func uniquePathsUtil(_ x: Int, _ y: Int, _ m: Int, _ n: Int, _ path: inout [[Int]], _ paths: inout [[[Int]]]) {
+    if x == m - 1 && y == n - 1 && path[x][y] == 1 {
+        paths.append(path)
+        return
+    }
+    let moves: [(Int, Int)] = [(1, 0), (0, 1)]
+    for k in 0 ..< moves.count {
+        let nextX = x + moves[k].0
+        let nextY = y + moves[k].1
+        if isPathSafe(nextX, nextY, m, n) {
+            path[nextX][nextY] = 1
+            uniquePathsUtil(nextX, nextY, m, n, &path, &paths)
+        }
+    }
+    
+}
+
+func isPathSafe(_ x: Int, _ y: Int, _ m: Int, _ n: Int) -> Bool {
+    return x >= 0 && x < m && y >= 0 && y < n
+}
+
+let pathsCount = uniquePaths(3,3)
+print(pathsCount)

@@ -62,9 +62,19 @@ func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
     if head == nil || head?.next == nil || k == 0 {
         return head
     }
+    
+    var size: Int = 0
     var curr = head
+    while curr != nil {
+        size += 1
+        curr = curr!.next
+    }
+    
+    let kk = k % size
+    
+    curr = head
     var i: Int = 0
-    var size: Int? = nil
+
     var last: ListNode? = nil
     while curr?.next != nil || last == nil {
         if last != nil {
@@ -80,7 +90,7 @@ func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
             curr = curr?.next
         }
         i += 1
-        if last == nil && i == k {
+        if last == nil && i == kk {
             last = head
         }
     }
@@ -97,14 +107,14 @@ func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
     return newHead
 }
 
-let values: [Int] = [1, 2, 3]
+let values: [Int] = [1,2]//[1, 2, 3]
 var list: ListNode? = nil
 values.forEach { value in
     list = insertIntoList(list, value)
 }
 printList(list)
 
-let rotated = rotateRight(list, 4)
+let rotated = rotateRight(list, 2)
 printList(rotated)
 
 
