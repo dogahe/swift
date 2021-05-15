@@ -11,11 +11,10 @@ func multiply(_ num1: String, _ num2: String) -> String {
         for j in 0 ..< num1.count {
             let n1 = num1[num1.index(num1.startIndex, offsetBy: num1.count - 1 - j)]
             if let i1 = n1.wholeNumberValue, let i2 = n2.wholeNumberValue {
-                let mul = i1 * i2 + carry
-                let d = mul / 10
-                let r = mul % 10
-                carry = d
-                element = "\(r)\(element)"
+                var mul = i1 * i2 + carry
+                carry = mul / 10
+                mul = mul % 10
+                element = "\(mul)\(element)"
             }
         }
         if carry > 0 {
@@ -36,18 +35,15 @@ func multiply(_ num1: String, _ num2: String) -> String {
                 }
             }
         }
-        let d = sum / 10
-        let r = sum % 10
-        carry = d
-        result = "\(r)\(result)"
+        carry = sum / 10
+        sum = sum % 10
+        result = "\(sum)\(result)"
     }
     if carry > 0 {
         result = "\(carry)\(result)"
     }
-    print(result)
     while result.count > 1 && result.first == "0" {
         result = String(result.dropFirst())
-        print(result)
     }
     return result
 }

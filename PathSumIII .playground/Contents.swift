@@ -41,21 +41,22 @@ public class TreeNode {
     }
 }
 // http://cslibrary.stanford.edu/110/BinaryTrees.html
+
+
 func pathSum(_ root: TreeNode?, _ sum: Int) -> Int {
-    func pathSumRecursive(_ root: TreeNode?, _ sum: Int) -> Int {
-        if let root = root {
-            return (sum == root.val ? 1 : 0) + pathSumRecursive(root.left, sum - root.val) + pathSumRecursive(root.right, sum - root.val)
-        } else {
-            return 0
-        }
-    }
-    
-    if let root = root {
-        return pathSumRecursive(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum)
-    } else {
+    if root == nil {
         return 0
     }
+    return helper(root!, sum) + pathSum(root!.left, sum) + pathSum(root!.right, sum)
 }
+
+func helper(_ node: TreeNode?, _ sum: Int) -> Int {
+    if node == nil {
+        return 0
+    }
+    return (sum == node!.val ? 1 : 0) + helper(node!.left, sum - node!.val) + helper(node!.right, sum - node!.val)
+}
+
 //let myTree: TreeNode = TreeNode(10, TreeNode(5, TreeNode(3, TreeNode(3), TreeNode(-2)), TreeNode(2, nil, TreeNode(1))), TreeNode(-3, nil, TreeNode(11)))
 //let myTree: TreeNode = TreeNode(10, TreeNode(5), TreeNode(-3))
 //let myTree: TreeNode = TreeNode(10, TreeNode(5, TreeNode(1), TreeNode(2)), TreeNode(-3, nil, TreeNode(9)))

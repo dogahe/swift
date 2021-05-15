@@ -25,41 +25,40 @@
  -105 <= nums[i] <= 105
  
 */
-import Foundation
 
 func threeSum(_ nums: [Int]) -> [[Int]] {
-    var dict: [Int:[Int]] = [:]
-    for i in 0 ..< nums.count {
-        if let val = dict[nums[i]] {
-            var newVal = val
-            newVal.append(i)
-            dict[nums[i]] = newVal
-        } else {
-            dict[nums[i]] = [i]
-        }
+    if nums.count < 3 {
+        return []
     }
-    var result: [[Int]] = []
-    for i in 0 ..< nums.count {
-        for j in i+1 ..< nums.count {
-            let a = nums[i]
-            let b = nums[j]
-            if let val = dict[-a-b] {
-                for index in val {
-                    if index != i && index != j {
-                        var triplet = [nums[i], nums[j], nums[index]]
-                        triplet.sort()
-                        if !result.contains(triplet) {
-                            result.append(triplet)
-                        }
-                    }
+    let numsSorted = nums.sorted()
+    var output: [[Int]] = []
+    for i in 0 ..< numsSorted.count - 2 {
+        if i == 0 || numsSorted[i] != numsSorted[i - 1] {
+            var j = i + 1
+            var k = numsSorted.count - 1
+            while j < k {
+                let sum = numsSorted[i] + numsSorted[j] + numsSorted[k]
+                if sum == 0 {
+                    output.append([numsSorted[i], numsSorted[j], numsSorted[k]])
+                    while j < k && numsSorted[j] == numsSorted[j + 1] { j += 1}
+                    while j < k && numsSorted[k] == numsSorted[k - 1] { k -= 1}
+                    j += 1
+                    k -= 1
+                } else if sum < 0 {
+                    j += 1
+                } else {
+                    k -= 1
                 }
-                
             }
         }
     }
-    return result
+    return output
 }
 
-let nums:[Int] = [0]//[-1,0,1,2,-1,-4]
+
+let nums: [Int] = [-1,0,1,2,-1,-4]
 
 threeSum(nums)
+
+
+

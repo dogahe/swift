@@ -53,18 +53,17 @@ func helper(_ node: TreeNode?, _ sum: Int, _ result: [Int] , _ results: inout [[
     if node == nil {
         return
     }
+    let val = node!.val
+    var newResult = result
+    newResult.append(node!.val)
     
     if node!.left == nil && node!.right == nil {
-        if sum == node!.val {
-            var newResult = result
-            newResult.append(node!.val)
+        if sum == val {
             results.append(newResult)
             return
         }
     }
-    let val = node!.val
-    var newResult = result
-    newResult.append(node!.val)
+
     helper(node!.left, sum - val, newResult, &results)
     helper(node!.right, sum - val, newResult, &results)
 }
