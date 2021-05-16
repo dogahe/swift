@@ -6,6 +6,7 @@
 //
 
 // SLOW
+
 /*
 func canPartition(_ nums: [Int]) -> Bool {
     var sum = nums.reduce(0, +)
@@ -21,15 +22,14 @@ func isSubsetSum(_ nums: [Int], _ sum: Int) -> Bool {
         return sum == 0
     }
     let o1 = isSubsetSum(nums.suffix(nums.count - 1), sum)
-    var newSum = sum
-    newSum -= nums[0]
-    let o2 =  isSubsetSum(nums.suffix(nums.count - 1), newSum)
+    let o2 =  isSubsetSum(nums.suffix(nums.count - 1), sum - nums[0])
     return o1 || o2
 }
 */
 
 
 // FAST
+
 
 func canPartition(_ nums: [Int]) -> Bool {
     var sum = nums.reduce(0, +)
@@ -56,6 +56,7 @@ func canPartition(_ nums: [Int]) -> Bool {
     }
     return part[sum][n]
 }
+
 
 let nums = [3, 1, 5, 9, 12]//[1, 2, 3, 5]//[1,5,11,5]
 print(canPartition(nums))
