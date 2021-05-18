@@ -171,3 +171,55 @@ var animalIterator = animals.makeIterator()
 while let animal = animalIterator.next() {
     print(animal)
 }
+
+// https://leetcode.com/discuss/interview-question/416544/Google-or-iOS-Phone-Screen-or-Linked-List-iterator
+
+class LinkedListNode<T> {
+    let value: T
+    var next: LinkedListNode?
+
+    init(_ value: T) {
+        self.value = value
+    }
+    
+    init(_ value: T, next: LinkedListNode?) {
+        self.value = value
+        self.next = next
+    }
+}
+
+extension LinkedListNode: Sequence {
+    func makeIterator() -> LinkedListIterator<T> {
+        return LinkedListIterator(self)
+   }
+}
+
+class LinkedListIterator<T>: IteratorProtocol {
+    var current: LinkedListNode<T>?
+    
+    init(_ node: LinkedListNode<T>) {
+        self.current = node
+    }
+    
+    
+    func next() -> LinkedListNode<T>? {
+        let result = current
+        current = current?.next
+        return result
+    }
+    
+    /*
+    func next() -> T? {
+        let result = current
+        current = current?.next
+        return result?.value
+    }
+ */
+}
+
+var myList = LinkedListNode<Int>(7, next: LinkedListNode<Int>(8,  next: LinkedListNode<Int>(10, next:  LinkedListNode<Int>(6))))
+for item in myList {
+    print(item.value)
+}
+
+

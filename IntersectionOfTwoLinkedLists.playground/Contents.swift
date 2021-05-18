@@ -78,6 +78,8 @@ func insertIntoList(_ head: ListNode?, _ val: Int) -> ListNode? {
     }
 }
 
+// Method A
+/*
 func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
     var curr: ListNode? = headA
     
@@ -113,7 +115,7 @@ func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
         }
     }
     
-    while currA != currB && currA != nil && currB != nil {
+    while currA !== currB && currA != nil && currB != nil {
         currA = currA?.next
         currB = currB?.next
     }
@@ -122,21 +124,43 @@ func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
         return currA
     }
     return nil
-    
+}
+*/
+
+// Method B: More Elegant
+
+func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+    var a: ListNode? = headA
+    var b: ListNode? = headB
+    var aReachedEnd: Bool = false
+    var bReachedEnd: Bool = false
+    while a !== b {
+        if a?.next == nil {
+            if aReachedEnd {
+                return nil
+            }
+            a = headB
+            aReachedEnd = true
+        } else {
+            a = a?.next
+        }
+        if b?.next == nil {
+            if bReachedEnd {
+                return nil
+            }
+            b = headA
+            bReachedEnd = true
+        } else {
+            b = b?.next
+        }
+    }
+    return a
 }
 
+let common = ListNode(8, ListNode(4, ListNode(5)))
 
-let listAVals = [1,9,1,2,4]
-let listBVals = [3,2,4]
-
-var listA: ListNode? = nil
-listAVals.forEach { value in
-    listA = insertIntoList(listA, value)
-}
-
-var listB: ListNode? = nil
-listBVals.forEach { value in
-    listB = insertIntoList(listB, value)
-}
+let listA = ListNode(4, ListNode(1, common))
+let listB = ListNode(5, ListNode(6, ListNode(1, common)))
 
 let a = getIntersectionNode(listA, listB)
+print(a?.val)
