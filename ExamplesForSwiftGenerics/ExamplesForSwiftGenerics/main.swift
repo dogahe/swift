@@ -223,3 +223,9 @@ for item in myList {
 }
 
 
+if var num = Int("12fdf3") {
+    num *= 2
+    print(num)
+} else {
+    print("Not an integer!")
+}

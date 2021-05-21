@@ -12,7 +12,7 @@ import Foundation
 // Works like a normal dictionary, but each key can be associated
 // with multiple, but unique (per key) values. Keys in the dictionary
 // should only be valid if they have at least 1 associated value at all times.
-protocol MultiValueDictionary : Sequence { //where Element == (Key, Value) {
+protocol MultiValueDictionary : Sequence where Element == (Key, Value) {
     associatedtype Key
     associatedtype Value
     
@@ -41,20 +41,22 @@ protocol MultiValueDictionary : Sequence { //where Element == (Key, Value) {
 // Start typing here
 
 struct MyDict<Key: Hashable, Value: Equatable> : MultiValueDictionary {
+    typealias Iterator = Dictionary<Key, [(Key, Value)]>.Iterator
     
-    typealias Element = (Key, Value)
-    typealias Iterator = [Key: [(Key, Value)]]
+    
+    //typealias Element = (Key, Value)
+
     
     
     var dict: [Key: [(Key, Value)]] = [:]
 
     
-    func makeIterator() -> some IteratorProtocol {
-        dict.makeIterator()
-    }
-    
-    
-    
+
+
+    func makeIterator() -> Dictionary<Key, [(Key, Value)]>.Iterator {
+        return dict.makeIterator()
+   }
+
     
     
     
