@@ -64,3 +64,27 @@ func treeLength(_ node: TreeNode?) -> Int {
     return 1 + max(treeLength(node!.left), treeLength(node!.right))
 }
 
+func isBalancedOrderN(_ root: TreeNode?) -> Bool {
+    if root == nil {
+        return true
+    }
+    return getHeight(root) != -1
+}
+
+func getHeight(_ node: TreeNode?) -> Int {
+    if node == nil {
+        return 0
+    }
+    let leftHeight = getHeight(node!.left)
+    if leftHeight == -1 {
+        return -1
+    }
+    let rightHeight = getHeight(node!.right)
+    if rightHeight == -1 {
+        return -1
+    }
+    if abs(leftHeight - rightHeight) > 1 {
+        return -1
+    }
+    return 1 + max(leftHeight, rightHeight)
+}
