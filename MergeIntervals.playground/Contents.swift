@@ -44,6 +44,28 @@ func merge(_ intervals: [[Int]]) -> [[Int]] {
     return sortedIntervals
 }
 
+func merge2(_ intervals: [[Int]]) -> [[Int]] {
+    let sortedIntervals = intervals.sorted { $0[0] <= $1[0] }
+    var merged: [[Int]] = []
+    merged.append(sortedIntervals[0])
+    var index: Int = 1
+    while index < sortedIntervals.count {
+        let interval = sortedIntervals[index]
+        var lastInterval = merged.last!
+        if interval[0] > lastInterval[1] {
+            merged.append(interval)
+        } else {
+            if interval[1] > lastInterval[1] {
+                lastInterval = [lastInterval[0], interval[1]]
+                merged[merged.count - 1] = lastInterval
+            }
+        }
+        index += 1
+    }
+    return merged
+}
+
 let intervals = [[2,3],[2,2],[3,3],[1,3],[5,7],[2,2],[4,6]]//[[1,4],[4,5]]//[[1,3],[2,6],[8,10],[15,18]]
 
 merge(intervals)
+merge2(intervals)

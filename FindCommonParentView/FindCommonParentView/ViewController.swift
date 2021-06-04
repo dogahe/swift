@@ -18,15 +18,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        recognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(recognizer)
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
         print(view.superview)
         print(view)
-        print(greenColorView)
-        print(indigoColorView)
-        print(orangeColorView)
+        print("Green:\(greenColorView) \(greenColorView.frame.minX) \(greenColorView.frame.minY)  \(greenColorView.frame.width)  \(greenColorView.frame.height) - Parent: \(greenColorView.superview)")
+        print("Indigo:\(indigoColorView) - Parent: \(indigoColorView.superview)")
+        print("Orange:\(orangeColorView) - Parent: \(orangeColorView.superview)")
         
         print(findParent(indigoColorView, orangeColorView))
-        
-        
     }
 
     func findParent(_ view1: UIView, _ view2: UIView) -> UIView? {
@@ -37,6 +42,13 @@ class ViewController: UIViewController {
             v2 = v2 == nil ? view1 : v2?.superview
         }
         return v1
+    }
+    
+    
+    @objc func tapped(_ touch: UITapGestureRecognizer) {
+        let touchPoint = touch.location(in: view)
+        print(touchPoint)
+        print(view.hitTest(touchPoint, with: nil))
     }
 
 }
