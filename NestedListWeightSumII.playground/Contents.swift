@@ -41,10 +41,10 @@ func helper(_ list: [Any], _ level: Int, _ levelLists: inout [[Int]]) {
                 print("O \(num)")
                 levelLists.append([num])
             } else {
-                while level > levelLists.count {
+                while level >= levelLists.count {
                     levelLists.append([])
                 }
-                print("X \(num)")
+                print("X \(num), \(level), \(levelLists)")
                 levelLists[level].append(num)
             }
         } else if let newList = element as? [Any] {
@@ -53,6 +53,6 @@ func helper(_ list: [Any], _ level: Int, _ levelLists: inout [[Int]]) {
     }
 }
 
-let list: [Any] = [[1,1],2,[1,1]]//[1,[4,[6]]]//
+let list: [Any] = [1,[4,[6]]] // [[1,1],2,[1,1]] // [1,[4,[6]]]
 weightSum(list)
 
