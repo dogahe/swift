@@ -39,8 +39,9 @@
  */
 func minWindow(_ s: String, _ t: String) -> String {
     var dictT: [Character:Int] = [:]
-    for i in 0 ..< t.count {
-        let c = t[t.index(t.startIndex, offsetBy: i)]
+    let tArr: [Character] = Array(t)
+    for i in 0 ..< tArr.count {
+        let c = tArr[i]
         if let val = dictT[c] {
             dictT[c] = val + 1
         } else {
@@ -53,8 +54,9 @@ func minWindow(_ s: String, _ t: String) -> String {
     var dictW: [Character:Int] = [:]
     var window: [Int] = [-1, 0, 0]
     
-    while r < s.count {
-        let c = s[s.index(s.startIndex, offsetBy: r)]
+    let sArr: [Character] = Array(s)
+    while r < sArr.count {
+        let c = sArr[r]
         if let val = dictW[c] {
             dictW[c] = val + 1
         } else {
@@ -71,7 +73,7 @@ func minWindow(_ s: String, _ t: String) -> String {
                 window[2] = r
             }
             
-            let c = s[s.index(s.startIndex, offsetBy: l)]
+            let c = sArr[l]
             if let val = dictW[c] {
                 dictW[c] = val - 1
                 if let tVal = dictT[c], tVal > val - 1 {
@@ -88,7 +90,7 @@ func minWindow(_ s: String, _ t: String) -> String {
     return String(s[s.index(s.startIndex, offsetBy: window[1])...s.index(s.startIndex, offsetBy: window[2])])
 }
 
-let s = ""//"A"//"ADOBECODEBANC"
-let t = ""//"AA"//"ABC"
+let s = "ADOBECODEBANC"//""//"A"//
+let t = "ABC"//""//"AA"//
 
 print(minWindow(s, t))
