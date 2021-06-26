@@ -28,39 +28,52 @@
  
  */
 
-// Wrong
-
 func largestRectangleArea(_ heights: [Int]) -> Int {
     var stack: [Int] = []
-    var maxArea = 0
-    var area = 0
+    var left: [Int] = Array(repeating: 0, count: heights.count)
+    var right: [Int] = Array(repeating: 0, count: heights.count)
     for i in 0 ..< heights.count {
-        if stack.isEmpty || heights[stack.last!] <= heights[i] {
+        if stack.isEmpty {
+            left[i] = 0
             stack.append(i)
         } else {
-            let top = stack.popLast()
-            if stack.isEmpty {
-                area = heights[top!] * i
-            } else {
-                area = heights[top!] * (i  - stack.last! - 1)
+            while !stack.isEmpty && heights[stack.last!] >= heights[i] {
+                stack.removeLast()
             }
-            maxArea = max(maxArea, area)
+            if stack.isEmpty {
+                left[i] = 0
+            } else {
+                left[i] = stack.last! + 1
+            }
+            stack.append(i)
         }
     }
-    let i = heights.count - 1
-    while !stack.isEmpty {
-        let top = stack.popLast()
+    stack = []
+    for index in 0 ..< heights.count {
+        let i = heights.count - 1 - index
         if stack.isEmpty {
-            area = heights[top!] * i
+            right[i] = heights.count - 1
+            stack.append(i)
         } else {
-            area = heights[top!] * (i  - stack.last! - 1)
+            while !stack.isEmpty && heights[stack.last!] >= heights[i] {
+                stack.removeLast()
+            }
+            if stack.isEmpty {
+                right[i] = heights.count - 1
+            } else {
+                right[i] = stack.last! - 1
+            }
+            stack.append(i)
         }
+    }
+    var maxArea = 0
+    for i in 0 ..< heights.count {
+        let area = (right[i] - left[i] + 1) * heights[i]
         maxArea = max(maxArea, area)
     }
     return maxArea
 }
 
-// Correct
 func largestRectangleAreaBruteForce(_ heights: [Int]) -> Int {
     var maxArea = 0
     for i in 0 ..< heights.count {
@@ -81,7 +94,7 @@ func largestRectangleAreaBruteForce(_ heights: [Int]) -> Int {
     return maxArea
 }
 
-let h = [2,1,5,6,2,3]//[6, 2, 5, 4, 5, 1, 6 ]//
+let h = [6, 2, 5, 4, 5, 1, 6 ]// [2,1,5,6,2,3]//
 print(largestRectangleArea(h))
 print(largestRectangleAreaBruteForce(h))
 
