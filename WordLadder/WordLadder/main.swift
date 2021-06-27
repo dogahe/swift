@@ -40,7 +40,6 @@
  
  */
 
-/*
 func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
     var wordSet = Set<String>(wordList)
     if !wordSet.contains(endWord) {
@@ -49,52 +48,12 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
     var queue: [String] = []
     queue.append(beginWord)
     var depth: Int = 0
-    while !queue.isEmpty {
-        depth += 1
-        var levelSize = queue.count
-        while levelSize > 0 {
-            let curr = queue.removeLast()
-            for i in 0 ..< curr.count {
-                var temp = curr
-                for charIndex in 0 ..< 26 {
-                    let char = String(UnicodeScalar(Character("a").asciiValue! + UInt8(charIndex)))
-                    if i == 0 {
-                        temp = char + temp.suffix(temp.count - 1)
-                    } else if i > 0 {
-                        temp = temp.prefix(i) + char + temp.suffix(temp.count - 1 - i)
-                    }
-                    if curr == temp {
-                        continue
-                    } else if temp == endWord {
-                        return depth + 1
-                    } else if wordSet.contains(temp) {
-                        queue.append(temp)
-                        wordSet.remove(temp)
-                    }
-                    temp = curr
-                }
-            }
-            levelSize -= 1
-        }
-    }
-    return 0
-}
-*/
-
-func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
-    var wordSet = Set<String>(wordList)
-    if !wordSet.contains(endWord) {
-        return 0
-    }
-    var queue: [String] = []
-    queue.append(beginWord)
-    var level: Int = 0
     let wordLength = beginWord.count
     while !queue.isEmpty {
-        level += 1
+        depth += 1
         let sizeOfQ = queue.count
         for _ in 0 ..< sizeOfQ {
-            let word = queue.removeLast()
+            let word = queue.removeFirst()
             for pos in 0 ..< wordLength {
                 var temp = word
                 for charIndex in 0 ..< 26 {
@@ -107,13 +66,12 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
                     if temp == word {
                         continue
                     } else if temp == endWord {
-                        return level + 1
+                        return depth + 1
                     } else if wordSet.contains(temp) {
                         print(temp)
                         queue.append(temp)
                         wordSet.remove(temp)
                     }
-                    temp = word
                 }
             }
         }
@@ -125,6 +83,5 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
 let beginWord = "hit" //"toon"//"a" // "abcv" //,
 let endWord = "cog" //"plea" //"c" // "ebad" // ,
 let wordList = ["hot","dot","dog","lot","log","cog"] //["poon", "plee", "same", "poie", "plea", "plie", "poin"] //["a", "b", "c"] // ["abcd", "ebad", "ebcd", "xyza"]//
-
 
 print(ladderLength(beginWord, endWord, wordList))
