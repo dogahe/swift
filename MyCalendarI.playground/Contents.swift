@@ -62,8 +62,61 @@ class MyCalendar {
     }
 }
 
+class MyCalendarTree {
+    class TreeNode {
+        var val: (Int, Int)
+        var left: TreeNode?
+        var right: TreeNode?
+        init(_ val: (Int, Int)) {
+            self.val = val
+            left = nil
+            right = nil
+        }
+    }
+    
+    var cal: TreeNode?
+    init() {
+        cal = nil
+    }
+    
+    func book(_ start: Int, _ end: Int) -> Bool {
+        if cal == nil {
+            cal = TreeNode((start, end))
+            return true
+        }
+        return insert(cal!, start, end)
+    }
+    
+    func insert(_ node: TreeNode, _ start: Int, _ end: Int) -> Bool {
+        if end <= node.val.0 {
+            if node.left == nil {
+                node.left = TreeNode((start, end))
+                return true
+            } else {
+                return insert(node.left!, start, end)
+            }
+        } else {
+            if start >= node.val.1 {
+                if node.right == nil {
+                    node.right = TreeNode((start, end))
+                    return true
+                } else {
+                    return insert(node.right!, start, end)
+                }
+            }
+        }
+        return false
+    }
+}
+
 let calendar = MyCalendar()
 calendar.book(10, 20)
 calendar.book(15, 25)
 calendar.book(20, 30)
+
+
+let calendar2 = MyCalendarTree()
+calendar2.book(10, 20)
+calendar2.book(15, 25)
+calendar2.book(20, 30)
 
