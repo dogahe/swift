@@ -1,3 +1,36 @@
+/*
+ 
+ tags:Google
+ 
+ 19. Remove Nth Node From End of List
+ 
+ Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ Example 1:
+ Input: head = [1,2,3,4,5], n = 2
+ Output: [1,2,3,5]
+ 
+ Example 2:
+ Input: head = [1], n = 1
+ Output: []
+ 
+ Example 3:
+ Input: head = [1,2], n = 1
+ Output: [1]
+  
+ Constraints:
+
+ The number of nodes in the list is sz.
+ 1 <= sz <= 30
+ 0 <= Node.val <= 100
+ 1 <= n <= sz
+  
+
+ Follow up: Could you do this in one pass?
+ 
+ */
+
+
 import Foundation
 
 public class ListNode {
@@ -62,6 +95,23 @@ func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
     return head
 }
 
+// With dummy node
+func removeNthFromEnd2(_ head: ListNode?, _ n: Int) -> ListNode? {
+    let dummy: ListNode = ListNode(0)
+    dummy.next = head
+    var ahead: ListNode? = head
+    var curr: ListNode? = dummy
+    for _ in 0 ..< n {
+        ahead = ahead?.next
+    }
+    while ahead != nil {
+        ahead = ahead?.next
+        curr = curr?.next
+    }
+    curr?.next = curr?.next?.next
+    return dummy.next
+}
+
 
 let values: [Int] = [1, 2, 3]
 var list: ListNode? = nil
@@ -70,5 +120,5 @@ values.forEach { value in
 }
 printList(list)
 
-let newList = removeNthFromEnd(list, 3)
+let newList = removeNthFromEnd2(list, 3)
 printList(newList)
