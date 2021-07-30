@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  543. Diameter of Binary Tree
  
  Given the root of a binary tree, return the length of the diameter of the tree.
@@ -40,7 +43,27 @@ public class TreeNode {
     }
 }
 
+
+// Better Solution
 func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
+    var diameter: Int = 0
+    longestPath(root, &diameter)
+    return diameter
+}
+
+func longestPath(_ node: TreeNode?, _ diameter: inout Int) -> Int {
+    if node == nil {
+        return 0
+    }
+    let leftDepth = longestPath(node!.left, &diameter)
+    let rightDepth = longestPath(node!.right, &diameter)
+    diameter = max(diameter, leftDepth + rightDepth)
+    return 1 + max(leftDepth, rightDepth)
+}
+
+
+
+func diameterOfBinaryTree2(_ root: TreeNode?) -> Int {
     var maxVal: Int = 0
     helper(root, &maxVal)
     return maxVal
@@ -66,6 +89,10 @@ func depth(_ node: TreeNode?) -> Int {
     }
     return 1 + max(depth(node!.left), depth(node!.right))
 }
+
+
+
+
 
 let tree1 = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3))
 diameterOfBinaryTree(tree1)
