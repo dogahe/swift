@@ -6,6 +6,8 @@
 //
 /*
 
+ tags:Google
+ 
  200. Number of Islands
  
  Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
@@ -73,12 +75,19 @@ func isSafe(_ grid: [[Character]], _ row: Int, _ col: Int, _ visited: [[Bool]]) 
     return row >= 0 && row < grid.count && col >= 0 && col < grid[0].count && grid[row][col] == "1" && !visited[row][col]
     
 }
-
 let grid: [[Character]] = [
+    ["1","1","1","1","0"],
+    ["1","1","0","1","0"],
+    ["1","1","0","0","0"],
+    ["0","0","0","0","0"]
+  ]
+print(numIslands(grid))
+
+let grid2: [[Character]] = [
   ["1","1","0","0","1"],
   ["1","1","0","0","1"],
   ["0","1","1","0","0"],
   ["1","0","0","1","1"]
 ]
 
-print(numIslands(grid))
+print(numIslands(grid2))
