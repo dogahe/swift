@@ -7,6 +7,8 @@
 
 /*
  
+ tags:Google
+ 
  322. Coin Change
  
  You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
@@ -54,16 +56,16 @@ func coinChange(_ coins: [Int], _ amount: Int) -> Int {
     if amount < 1 {
         return 0
     }
-    for i in 1 ... amount {
-        var sol = sols[i]
-        for j in coins {
-            if j <= i {
-                if sols[i - j] < Int.max {
-                    sol = min(sol, sols[i - j] + 1)
+    for value in 1 ... amount {
+        var sol = sols[value]
+        for coin in coins {
+            if coin <= value {
+                if sols[value - coin] < Int.max {
+                    sol = min(sol, sols[value - coin] + 1)
                 }
             }
         }
-        sols[i] = sol
+        sols[value] = sol
     }
     if sols[amount] == Int.max {
         return -1
