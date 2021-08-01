@@ -1,4 +1,6 @@
 /*
+
+ tags:Google
  
  Insert Interval
  
@@ -71,16 +73,62 @@ func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
     return sortedIntervals
 }
 
+func insert2(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
+    if intervals.isEmpty {
+        return [newInterval]
+    }
+    var merged: [[Int]] = []
+    var index = 0
+    while index < intervals.count && intervals[index][0] <= newInterval[0] {
+        merged.append(intervals[index])
+        index += 1
+    }
+    if merged.isEmpty {
+        merged.append(newInterval)
+    } else {
+        if newInterval[0] > merged[merged.count - 1][1] {
+            merged.append(newInterval)
+        } else {
+            if newInterval[1] > merged[merged.count - 1][1] {
+                merged[merged.count - 1] = [merged[merged.count - 1][0], newInterval[1]]
+            }
+        }
+    }
+    for i in index ..< intervals.count {
+        if intervals[i][0] > merged[merged.count - 1][1] {
+            merged.append(intervals[i])
+        } else {
+            if intervals[i][1] > merged[merged.count - 1][1] {
+                merged[merged.count - 1] = [merged[merged.count - 1][0], intervals[i][1]]
+            }
+        }
+    }
+    return merged
+}
 
-//let intervals = [[1,3],[6,9]]
-//let newInterval = [2,5]
-
-//let intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]]
-//let newInterval = [4,8]
-
-//let intervals: [[Int]] = []
-//let newInterval = [5,7]
-
-let intervals = [[1,5]]
-let newInterval = [2,7]
+let intervals = [[1,3],[6,9]]
+let newInterval = [2,5]
 insert(intervals, newInterval)
+insert2(intervals, newInterval)
+
+let intervals2 = [[1,2],[3,5],[6,7],[8,10],[12,16]]
+let newInterval2 = [4,8]
+insert(intervals2, newInterval2)
+insert2(intervals2, newInterval2)
+
+let intervals3: [[Int]] = []
+let newInterval3 = [5,7]
+insert(intervals3, newInterval3)
+insert2(intervals3, newInterval3)
+ 
+let intervals4 = [[1,5]]
+let newInterval4 = [2,7]
+insert(intervals4, newInterval4)
+insert2(intervals4, newInterval4)
+
+let intervals5 = [[1,5]]
+let newInterval5 = [0,3]
+insert(intervals5, newInterval5)
+insert2(intervals5, newInterval5)
+
+
