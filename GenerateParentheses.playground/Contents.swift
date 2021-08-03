@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  22. Generate Parentheses
     
  Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
@@ -32,7 +35,7 @@ func backtrack(_ curr: String, _ open: Int, _ close: Int, _ n: Int, _ results: i
     if open < n {
         backtrack(curr + "(", open + 1, close, n, &results)
     }
-    if close < n && close < open {
+    if close < open {
         backtrack(curr + ")", open, close + 1, n, &results)
     }
 }
