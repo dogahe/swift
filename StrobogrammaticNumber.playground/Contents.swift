@@ -32,6 +32,7 @@
  num does not contain any leading zeros except for zero itself.
  
  */
+
 func isStrobogrammatic(_ num: String) -> Bool {
     let numArr: [Character] = Array(num)
     var upside: String = ""
