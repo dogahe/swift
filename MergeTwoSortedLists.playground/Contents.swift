@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  Merge Two Sorted Lists
  
  Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.
@@ -41,20 +44,21 @@ func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var n2 = l2
     var head: ListNode?
     var prev: ListNode? = nil
-    if n1 == nil {
+    
+    if l1 == nil {
         return l2
     }
-    if n2 == nil {
+    if l2 == nil {
         return l1
     }
-    if n1!.val <= n2!.val {
+    if l1!.val <= l2!.val {
         head = l1
-        prev = n1
-        n1 = n1!.next
+        prev = l1
+        n1 = l1!.next
     } else {
         head = l2
-        prev = n2
-        n2 = n2!.next
+        prev = l2
+        n2 = l2!.next
     }
     while n1 != nil && n2 != nil {
         if n1!.val <= n2!.val {
