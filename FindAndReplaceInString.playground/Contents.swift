@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  833. Find And Replace in String
  
  You are given a 0-indexed string s that you must perform k replacement operations on. The replacement operations are given as three 0-indexed parallel arrays, indices, sources, and targets, all of length k.
@@ -64,15 +67,44 @@ func findReplaceString(_ s: String, _ indices: [Int], _ sources: [String], _ tar
     return str
 }
 
+struct Replacement {
+    let index: Int
+    let source: String
+    let target: String
+}
+func findReplaceString2(_ s: String, _ indices: [Int], _ sources: [String], _ targets: [String]) -> String {
+    var str = s
+    var offset = 0
+    var replacements: [Replacement] = []
+    for i in 0 ..< indices.count {
+        let replacement = Replacement(index: indices[i], source: sources[i], target: targets[i])
+        replacements.append(replacement)
+    }
+    replacements.sort(by:  { $0.index < $1.index } )
+    for replacement in replacements {
+        let left = str.index(str.startIndex, offsetBy: replacement.index + offset)
+        let right = str.index(str.startIndex, offsetBy: replacement.index + replacement.source.count - 1 + offset)
+        let sub = str[left ... right]
+        if sub == replacement.source {
+            str.replaceSubrange(left ... right, with: replacement.target)
+            offset += replacement.target.count - replacement.source.count
+        }
+    }
+    return str
+}
+
 
 let s = "abcd", indices = [0, 2], sources = ["a", "cd"], targets = ["eee", "ffff"]
 findReplaceString(s, indices, sources, targets)
+findReplaceString2(s, indices, sources, targets)
 
 let s2 = "abcd", indices2 = [0, 2], sources2 = ["ab","ec"], targets2 = ["eee","ffff"]
 findReplaceString(s2, indices2, sources2, targets2)
+findReplaceString2(s2, indices2, sources2, targets2)
 
 let s3 = "vmokgggqzp", indices3 = [3,5,1], sources3 = ["kg","ggq","mo"], targets3 = ["s","so","bfr"]
 findReplaceString(s3, indices3, sources3, targets3)
+findReplaceString2(s3, indices3, sources3, targets3)
 
 
 
