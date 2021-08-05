@@ -2,7 +2,7 @@ func oddEvenJumps(_ arr: [Int]) -> Int {
     var sum = 0
     for i in 0 ..< arr.count {
         var num = arr[i]
-        var jump = 1
+        var jump = 0
         var j = i + 1
         while j < arr.count {
             if jump % 2 == 1 {
@@ -33,4 +33,10 @@ oddEvenJumps(arr2)
 
 let arr3 = [5,1,3,4,2]
 oddEvenJumps(arr3)
+
+let arr4 = [1,2,3,2,1,4,4,5]
+oddEvenJumps(arr4)
+
+
+
 
