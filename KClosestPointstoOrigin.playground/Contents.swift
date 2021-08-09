@@ -1,6 +1,9 @@
 /*
  
+ tags:Google
+ 
  973. K Closest Points to Origin
+ 
  Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
  
  The distance between two points on the X-Y plane is the Euclidean distance (i.e, √(x1 - x2)2 + (y1 - y2)2).
@@ -79,6 +82,7 @@ struct Point {
     let coord: [Int]
     let distance: Int
 }
+
 func kClosest(_ points: [[Int]], _ k: Int) -> [[Int]] {
     var distances: [Point] = points.map { Point(coord: $0, distance: $0[0]*$0[0] + $0[1]*$0[1]) }
     
