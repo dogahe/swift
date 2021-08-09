@@ -1,5 +1,9 @@
 /*
  
+ tags:Google
+ 
+ 215. Kth Largest Element in an Array
+ 
  Given an integer array nums and an integer k, return the kth largest element in the array.
 
  Note that it is the kth largest element in the sorted order, not the kth distinct element.
@@ -24,14 +28,14 @@ import Foundation
 
 func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
     var numsCopy = nums
-    return randomizedSelect(&numsCopy, 0, nums.count - 1, k)
+    return randomizedSelect(&numsCopy, 0, nums.count - 1, nums.count - k + 1)
 }
 
 func partition(_ arr: inout [Int], _ p: Int, _ r: Int) -> Int {
     let x = arr[r]
     var i = p - 1
     for j in p ... r - 1 {
-        if arr[j] >= x {
+        if arr[j] <= x {
             i += 1
             let temp = arr[i]
             arr[i] = arr[j]
@@ -67,7 +71,13 @@ func randomizedSelect(_ arr: inout [Int], _ p: Int, _ r: Int, _ i: Int) -> Int {
     }
 }
 
-var arr = [3,2,3,1,2,4,5,5,6]
-var k = 4
+let nums = [3,2,1,5,6,4], k = 2
+findKthLargest(nums, k)
 
-findKthLargest(arr, k)
+let nums2 = [3,2,3,1,2,4,5,5,6], k2 = 4
+findKthLargest(nums2, k2)
+
+
+
+
+

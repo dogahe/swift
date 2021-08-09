@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  121. Best Time to Buy and Sell Stock
  
  You are given an array prices where prices[i] is the price of a given stock on the ith day.
@@ -31,9 +34,10 @@ func maxProfit(_ prices: [Int]) -> Int {
     for i in 0 ..< prices.count {
         if prices[i] < m {
             m = prices[i]
+        } else {
+            let p = prices[i] - m
+            maxP = max(maxP, p)
         }
-        let p = prices[i] - m
-        maxP = max(maxP, p)
     }
     return max(maxP, 0)
 }
