@@ -1,4 +1,7 @@
 /*
+ 
+tags:Google
+ 
 124. Binary Tree Maximum Path Sum
 
 A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
@@ -54,7 +57,7 @@ func helper(_ node: TreeNode?, _ maximum: inout Int) -> Int {
     let l = helper(node!.left, &maximum)
     let r = helper(node!.right, &maximum)
     
-    let maxSingle = max(max(l, r) + node!.val, node!.val)
+    let maxSingle = max(max(l, r) + node!.val, node!.val) // This is the only case that its results can propagate to the top
     let maxTop = max(maxSingle, l + r + node!.val)
     maximum = max(maximum, maxTop)
     return maxSingle
