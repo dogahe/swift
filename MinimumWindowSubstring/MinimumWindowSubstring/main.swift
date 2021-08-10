@@ -7,6 +7,8 @@
 
 /*
  
+ tags:Google
+ 
  76. Minimum Window Substring
  
  
@@ -14,26 +16,20 @@
 
  Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.
 
-  
-
  Example 1:
-
  Input: s = "ADOBECODEBANC", t = "ABC"
  Output: "BANC"
- Example 2:
-
+ 
+ Example 2
  Input: s = "a", t = "a"
  Output: "a"
-  
 
  Constraints:
-
  m == s.length
  n == t.length
  1 <= m, n <= 105
  s and t consist of English letters.
   
-
  Follow up: Could you find an algorithm that runs in O(m + n) time?
  
  */
