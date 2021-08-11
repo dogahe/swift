@@ -1,5 +1,7 @@
 /*
  
+ tags:Google
+ 
  809. Expressive Words
  
  Sometimes people repeat letters to represent extra feeling, such as "hello" -> "heeellooo", "hi" -> "hiiii".  In these strings like "heeellooo", we have groups of adjacent letters that are all the same:  "h", "eee", "ll", "ooo".
