@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  Decode String
  
  Given an encoded string, return its decoded string.
@@ -94,6 +97,43 @@ func findBetweenBrackets(_ s: String) -> String {
     return str
 }
 
-let s = "3[a2[c]]"//"12[ab]"//"abc3[cd]xyz"//"2[abc]3[cd]ef"//"3[a]2[bc]"
+// Much Simpler Solution
+func decodeStringSimpler(_ s: String) -> String {
+    var index: Int = 0
+    return doDecode(s, &index)
+}
+
+func doDecode(_ s: String, _ index: inout Int) -> String {
+    let sArr: [Character] = Array(s)
+    var output: String = ""
+    while index < s.count && sArr[index] != "]" {
+        if !sArr[index].isNumber {
+            output.append(sArr[index])
+            index += 1
+        } else {
+            var num = 0
+            while sArr[index].isNumber {
+                if let digit = sArr[index].wholeNumberValue {
+                    num = num*10 + digit
+                }
+                index += 1
+            }
+            index += 1 // Skipping [
+            let decodedString = doDecode(s, &index)
+            index += 1 // skipping ]
+            output.append(String(repeating: decodedString, count: num))
+        }
+    }
+    return output
+}
+
+
+var s = "3[a2[c]]"//"12[ab]"//"abc3[cd]xyz"//"2[abc]3[cd]ef"//"3[a]2[bc]"
 
 decodeString(s)
+decodeStringSimpler(s)
+
+s = "2[abc]3[cd]ef"
+
+decodeString(s)
+decodeStringSimpler(s)

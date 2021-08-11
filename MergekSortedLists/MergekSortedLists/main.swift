@@ -95,13 +95,58 @@ func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
     return resultHead
 }
 
+func mergeKListsDivideAndConcur(_ lists: [ListNode?]) -> ListNode? {
+    if lists.isEmpty {
+        return nil
+    }
+    var listsCopy = lists
+    var steps = 1
+    while steps < listsCopy.count {
+        for index in stride(from: 0, to: listsCopy.count - steps, by: steps * 2) {
+            listsCopy[index] = mergeTwoLists(listsCopy[index], listsCopy[index + steps])
+        }
+        steps *= 2
+    }
+    return lists[0]
+}
+
+func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+    var n1 = l1
+    var n2 = l2
+    
+    let head: ListNode? = ListNode(0)
+    var curr: ListNode? = head
+    
+    while n1 != nil && n2 != nil {
+        if n1!.val <= n2!.val {
+            curr!.next = n1
+            curr = n1
+            n1 = n1!.next
+        } else {
+            curr!.next = n2
+            curr = n2
+            n2 = n2!.next
+        }
+    }
+    if n1 != nil {
+        curr!.next = n1
+    } else {
+        curr!.next = n2
+    }
+    return head!.next
+}
+
+
 let l1 = ListNode(1, ListNode(4, ListNode(5)))
 let l2 = ListNode(1, ListNode(3, ListNode(4)))
 let l3 = ListNode(2, ListNode(6))
 let lists = [l1, l2, l3]
 
 let r = mergeKLists(lists)
-
 printList(r)
+
+let r2 = mergeKListsDivideAndConcur(lists)
+printList(r2)
+
 
 
