@@ -7,6 +7,8 @@
 
 /*
  
+ tags:Google
+ 
  210. Course Schedule II
 
  There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
@@ -77,3 +79,5 @@ let numCourses = 4 //2
 let prerequisites = [[1,0], [2, 0], [3, 1], [3, 2]]// [[1, 0]]
 print(findOrder(numCourses, prerequisites))
 
+let prerequisites2 = [[1,0], [2, 1], [0, 2]]
+print(findOrder(3, prerequisites2))
