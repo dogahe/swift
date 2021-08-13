@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Google
+ 
  Letter Combinations of a Phone Number
  
  Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
@@ -31,21 +34,22 @@ func letterCombinations(_ digits: String) -> [String] {
     if digits == "" {
         return []
     }
+    let digitsArr: [Character] = Array(digits)
     var output: [String] = []
-    var word: [Character] = Array(repeating: "_", count: digits.count)
-    createWord(digits, 0, &word, &output)
+    createWord(digitsArr, 0, "", &output)
     return output
 }
 
-func createWord(_ digits: String, _ level: Int, _ word: inout [Character], _ output: inout [String]) {
+func createWord(_ digits: [Character], _ level: Int, _ word: String, _ output: inout [String]) {
     if level == digits.count {
-        output.append(String(word))
+        output.append(word)
         return
     }
-    let letters = getLetters(digits[digits.index(digits.startIndex, offsetBy: level)])
+    let letters = getLetters(digits[level])
     for letter in letters {
-        word[level] = letter
-        createWord(digits, level + 1, &word, &output)
+        var updatedWord = word
+        updatedWord.append(letter)
+        createWord(digits, level + 1, updatedWord, &output)
     }
 }
 
