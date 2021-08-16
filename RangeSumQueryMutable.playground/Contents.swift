@@ -92,7 +92,7 @@ class NumArray {
         } else if index <= mid {
             updateValSegTree(2 * treeIndex + 1, lo, mid, index, val)
         }
-        tree[treeIndex] = tree [2*treeIndex + 1] + tree[2*treeIndex + 2]
+        tree[treeIndex] = tree[2*treeIndex + 1] + tree[2*treeIndex + 2]
     }
 }
 
