@@ -1,4 +1,9 @@
 /*
+ 
+ tags:Google
+ 
+ 146. LRU Cache
+ 
  Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
 
  Implement the LRUCache class:
@@ -44,7 +49,7 @@ public class Node {
     public var key: Int
     public var val: Int
     public var next: Node?
-    public var pre: Node?
+    public var prev: Node?
     public init(_ key: Int, _ val: Int) { self.key = key; self.val = val; }
 }
 
@@ -57,8 +62,12 @@ class LRUCache {
     init(_ capacity: Int) {
         self.capacity = capacity
         total = 0
-        head = nil
-        tail = nil
+        head = Node(0, 0)
+        tail = Node(0, 0)
+        head!.prev = nil
+        head!.next = tail
+        tail!.prev = head
+        tail!.next = nil
         dict = [:]
     }
     
@@ -76,49 +85,32 @@ class LRUCache {
     
     func put(_ key: Int, _ val: Int) {
         if let node = dict[key] {
-            let nodeUpdated = node
-            nodeUpdated.val = val
+            node.val = val
             delete(node)
-            addToHead(nodeUpdated)
+            addToHead(node)
         } else {
             let node = Node(key, val)
             dict[key] = node
-            if total < capacity {
-                total += 1
-                addToHead(node)
-            } else {
-                dict[tail!.key] = nil
-                delete(tail!)
-                addToHead(node)
+            addToHead(node)
+            total += 1
+            if total > capacity {
+                dict[tail!.prev!.key] = nil
+                delete(tail!.prev!)
+                total -= 1
             }
         }
     }
     
     func delete(_ node: Node) {
-        if node.pre != nil && node.next != nil {
-            node.pre?.next = node.next
-            node.next?.pre = node.pre
-        }
-        // First Node
-        if node.pre == nil {
-            node.next?.pre = nil
-            head = node.next
-        }
-        // Last Node
-        if node.next == nil {
-            node.pre?.next = nil
-            tail = node.pre
-        }
+        node.prev!.next = node.next
+        node.next!.prev = node.prev
     }
     
     func addToHead(_ node: Node) {
-        node.next = head
-        if head == nil {
-            tail = node
-        } else {
-            head!.pre = node
-        }
-        head = node
+        node.prev = head
+        node.next = head!.next
+        head!.next!.prev = node
+        head!.next = node
     }
 }
 
