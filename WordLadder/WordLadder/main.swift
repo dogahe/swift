@@ -56,11 +56,7 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
             var temp = word
             for charIndex in 0 ..< 26 {
                 let char = String(UnicodeScalar(Character("a").asciiValue! + UInt8(charIndex)))
-                if pos == 0 {
-                    temp = char + temp.suffix(wordLength - 1)
-                } else if pos > 0 {
-                    temp = temp.prefix(pos) + char + temp.suffix(wordLength - 1 - pos)
-                }
+                temp = temp.prefix(pos) + char + temp.suffix(wordLength - 1 - pos)
                 if temp == word {
                     continue
                 } else if temp == endWord {
