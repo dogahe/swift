@@ -52,47 +52,37 @@ func nextClosestTime(_ time: String) -> String {
         let c = timeArr[index]
         if i != 2 {
             let cNum = c.wholeNumberValue!
+            let selectedDigit = digits.min()!
             if i == 0 {
-                var selectedDigit = digits.min()!
                 for digit in digits {
                     if digit > cNum {
-                        selectedDigit = digit
-                        timeArr[index] = Character("\(selectedDigit)")
+                        timeArr[index] = Character("\(digit)")
                         return String(timeArr)
                     }
                 }
-                timeArr[index] = Character("\(selectedDigit)")
             } else if i == 1 {
-                var selectedDigit = digits.min()!
                 for digit in digits {
                     if digit > cNum && digit < 6 {
-                        selectedDigit = digit
-                        timeArr[index] = Character("\(selectedDigit)")
+                        timeArr[index] = Character("\(digit)")
                         return String(timeArr)
                     }
                 }
-                timeArr[index] = Character("\(selectedDigit)")
             } else if i == 3 {
-                var selectedDigit = digits.min()!
                 for digit in digits {
                     if digit > cNum && Int("\(timeArr[0])\(digit)")! < 24 {
-                        selectedDigit = digit
-                        timeArr[index] = Character("\(selectedDigit)")
+                        timeArr[index] = Character("\(digit)")
                         return String(timeArr)
                     }
                 }
-                timeArr[index] = Character("\(selectedDigit)")
             } else if i == 4 {
-                var selectedDigit = digits.min()!
                 for digit in digits {
                     if digit > cNum && Int("\(digit)\(timeArr[1])")! < 24 {
-                        selectedDigit = digit
-                        timeArr[index] = Character("\(selectedDigit)")
+                        timeArr[index] = Character("\(digit)")
                         return String(timeArr)
                     }
                 }
-                timeArr[index] = Character("\(selectedDigit)")
             }
+            timeArr[index] = Character("\(selectedDigit)")
         }
     }
     return String(timeArr)
