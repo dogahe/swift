@@ -49,23 +49,12 @@ func trap(_ height: [Int]) -> Int {
 func trapFaster(_ height: [Int]) -> Int {
     var leftMaxArr: [Int] = []
     var leftMax = 0
-    for i in 0 ..< height.count {
-        if i == 0 {
-            leftMaxArr.append(0)
-        } else {
-            leftMaxArr.append(leftMax)
-        }
-        leftMax = max(leftMax, height[i])
-    }
-    
     var rightMaxArr: [Int] = []
     var rightMax = 0
     for i in 0 ..< height.count {
-        if i == 0 {
-            rightMaxArr.append(0)
-        } else {
-            rightMaxArr.insert(rightMax, at: 0)
-        }
+        leftMaxArr.append(leftMax)
+        leftMax = max(leftMax, height[i])
+        rightMaxArr.insert(rightMax, at: 0)
         rightMax = max(rightMax, height[height.count - 1 - i])
     }
     var water = 0
