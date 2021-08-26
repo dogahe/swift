@@ -26,15 +26,14 @@
  */
 
 func validPalindrome(_ s: String) -> Bool {
+    let sArr: [Character] = Array(s)
     var i: Int = 0
     var j: Int = s.count - 1
     while i < j {
-        let leftIndex = s.index(s.startIndex, offsetBy: i)
-        let rightIndex = s.index(s.startIndex, offsetBy: j)
-        let left = s[leftIndex]
-        let right = s[rightIndex]
+        let left = sArr[i]
+        let right = sArr[j]
         if left != right {
-            return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1)
+            return isPalindrome(sArr, i + 1, j) || isPalindrome(sArr, i, j - 1)
         }
         i += 1
         j -= 1
@@ -42,14 +41,12 @@ func validPalindrome(_ s: String) -> Bool {
     return true
 }
 
-func isPalindrome(_ s: String, _ left: Int, _ right: Int) -> Bool {
+func isPalindrome(_ s: [Character], _ left: Int, _ right: Int) -> Bool {
     var i = left
     var j = right
     while i < j {
-        let leftIndex = s.index(s.startIndex, offsetBy: i)
-        let rightIndex = s.index(s.startIndex, offsetBy: j)
-        let left = s[leftIndex]
-        let right = s[rightIndex]
+        let left = s[i]
+        let right = s[j]
         if left != right {
             return false
         }
@@ -59,6 +56,11 @@ func isPalindrome(_ s: String, _ left: Int, _ right: Int) -> Bool {
     return true
 }
 
-let s = "abc"
-
+let s = "aba"
 validPalindrome(s)
+
+let s2 = "abca"
+validPalindrome(s2)
+
+let s3 = "abc"
+validPalindrome(s3)
