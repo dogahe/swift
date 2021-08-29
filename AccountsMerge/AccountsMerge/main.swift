@@ -41,66 +41,65 @@
 
 
 func accountsMerge(_ accounts: [[String]]) -> [[String]] {
-    var arr: [(String, Set<String>)] = []
+    var emailToName: [String: String] = [:]
+    var graph: [String: [String]] = [:]
     for account in accounts {
         let name = account[0]
         var emails = account
         emails.removeFirst()
-        let emailsSet = Set(emails)
-        arr.append((name, emailsSet))
-        
-        /*
-        var wasAdded: Bool = false
-        for i in 0 ..< arr.count {
-            let element = arr[i]
-            let emailsSet1 = element.1
-            if !emailsSet.intersection(emailsSet1).isEmpty {
-                arr[i].1 = emailsSet.union(emailsSet1)
-                wasAdded = true
-            }
-        }
-        if !wasAdded {
-            arr.append((name, emailsSet))
-        }
- */
-    }
-    
-    var i = 0
-    while i < arr.count - 1 {
-        var j = i + 1
-        while j < arr.count {
-            let emailsSet1 = arr[i].1
-            let emailsSet2 = arr[j].1
-            if !emailsSet1.intersection(emailsSet2).isEmpty {
-                arr[i].1 = emailsSet1.union(emailsSet2)
-                arr.remove(at: j)
+        let firstEmail = emails.first!
+        for email in emails {
+            if let val = graph[email] {
+                var newVal = val
+                newVal.append(firstEmail)
+                graph[email] = newVal
             } else {
-               j += 1
+                graph[email] = [firstEmail]
             }
+            if let val = graph[firstEmail] {
+                var newVal = val
+                newVal.append(email)
+                graph[firstEmail] = newVal
+            } else {
+                graph[firstEmail] = [email]
+            }
+            emailToName[email] = name
         }
-        i += 1
     }
     
-    print("***** \(arr)")
-    
-    
-    var output: [[String]] = []
-    for element in arr {
-        let emails = Array(element.1).sorted()
-        var account = [element.0]
-        account.append(contentsOf: emails)
-        output.append(account)
+    var visited: [String: Int] = [:]
+    var connected
+    for (_, (email, value)) in graph.enumerated() {
+        if visited[email] == nil {
+            dfs(email, graph, &visited)
+        }
     }
-    return output
+    print(emailToName)
+    print(graph)
+    return []
 }
 
+func dfs(_ email: String, _ graph: [String: [String]], _ visited: inout [String: Int]) {
+    if let val = visited[email], val == 2 {
+        return
+    }
+    visited[email] = 1
+    if let connecteds = graph[email] {
+        for connected in connecteds {
+            if visited[connected] == nil {
+                dfs(connected, graph, &visited)
+            }
+        }
+    }
+    visited[email] = 2
+}
 
 let accounts1 = [["John","johnsmith@mail.com","john_newyork@mail.com"],["John","johnsmith@mail.com","john00@mail.com"],["Mary","mary@mail.com"],["John","johnnybravo@mail.com"]]
-print(accountsMerge(accounts1))
+//print(accountsMerge(accounts1))
 
 print("--------------")
 let accounts2 = [["Gabe","Gabe0@m.co","Gabe3@m.co","Gabe1@m.co"],["Kevin","Kevin3@m.co","Kevin5@m.co","Kevin0@m.co"],["Ethan","Ethan5@m.co","Ethan4@m.co","Ethan0@m.co"],["Hanzo","Hanzo3@m.co","Hanzo1@m.co","Hanzo0@m.co"],["Fern","Fern5@m.co","Fern1@m.co","Fern0@m.co"]]
-print(accountsMerge(accounts2))
+//print(accountsMerge(accounts2))
 
 print("--------------")
 let accounts3 =
