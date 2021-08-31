@@ -7,6 +7,8 @@
 
 /*
  
+ tags:Facebook
+ 
  721. Accounts Merge
  
  Given a list of accounts where each element accounts[i] is a list of strings, where the first element accounts[i][0] is a name, and the rest of the elements are emails representing emails of the account.
@@ -38,8 +40,6 @@
  
  */
 
-
-
 func accountsMerge(_ accounts: [[String]]) -> [[String]] {
     var emailToName: [String: String] = [:]
     var graph: [String: [String]] = [:]
@@ -68,26 +68,39 @@ func accountsMerge(_ accounts: [[String]]) -> [[String]] {
     }
     
     var visited: [String: Int] = [:]
-    var connected
+    var connectedEmails: [[String]] = []
     for (_, (email, value)) in graph.enumerated() {
         if visited[email] == nil {
-            dfs(email, graph, &visited)
+            dfs(email, graph, true, &visited, &connectedEmails)
         }
     }
-    print(emailToName)
-    print(graph)
-    return []
+    
+    var output: [[String]] = []
+    for index in 0 ..< connectedEmails.count {
+        let emails = connectedEmails[index]
+        let email = emails[0]
+        let name = emailToName[email]!
+        output.append([name])
+        output[output.count - 1].append(contentsOf: emails.sorted())
+    }
+    return output
 }
 
-func dfs(_ email: String, _ graph: [String: [String]], _ visited: inout [String: Int]) {
+func dfs(_ email: String, _ graph: [String: [String]], _ addingConnection: Bool, _ visited: inout [String: Int], _ connectedEmails: inout [[String]]) {
     if let val = visited[email], val == 2 {
         return
     }
+    if addingConnection {
+        connectedEmails.append([email])
+    } else {
+        connectedEmails[connectedEmails.count - 1].append(email)
+    }
+    
     visited[email] = 1
     if let connecteds = graph[email] {
         for connected in connecteds {
             if visited[connected] == nil {
-                dfs(connected, graph, &visited)
+                dfs(connected, graph, false, &visited, &connectedEmails)
             }
         }
     }
@@ -95,14 +108,14 @@ func dfs(_ email: String, _ graph: [String: [String]], _ visited: inout [String:
 }
 
 let accounts1 = [["John","johnsmith@mail.com","john_newyork@mail.com"],["John","johnsmith@mail.com","john00@mail.com"],["Mary","mary@mail.com"],["John","johnnybravo@mail.com"]]
-//print(accountsMerge(accounts1))
-
 print("--------------")
+print(accountsMerge(accounts1))
+
 let accounts2 = [["Gabe","Gabe0@m.co","Gabe3@m.co","Gabe1@m.co"],["Kevin","Kevin3@m.co","Kevin5@m.co","Kevin0@m.co"],["Ethan","Ethan5@m.co","Ethan4@m.co","Ethan0@m.co"],["Hanzo","Hanzo3@m.co","Hanzo1@m.co","Hanzo0@m.co"],["Fern","Fern5@m.co","Fern1@m.co","Fern0@m.co"]]
-//print(accountsMerge(accounts2))
-
 print("--------------")
+print(accountsMerge(accounts2))
+
 let accounts3 =
 [["David","David0@m.co","David1@m.co"],["David","David3@m.co","David4@m.co"],["David","David4@m.co","David5@m.co"],["David","David2@m.co","David3@m.co"],["David","David1@m.co","David2@m.co"]]
-
+print("--------------")
 print(accountsMerge(accounts3))
