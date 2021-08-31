@@ -66,7 +66,7 @@ func accountsMerge(_ accounts: [[String]]) -> [[String]] {
             emailToName[email] = name
         }
     }
-    
+    print(graph)
     var visited: [String: Int] = [:]
     var connectedEmails: [[String]] = []
     for (_, (email, value)) in graph.enumerated() {
