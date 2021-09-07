@@ -147,4 +147,11 @@ func myAtoi(_ s: String) -> Int {
 let str = "20000000000000000000"
 myAtoi(str)
 
+let str2 = "   -42"
+myAtoi(str2)
 
+let str3 = "4193 with words"
+myAtoi(str3)
+
+let str4 = "words and 987"
+myAtoi(str4)
