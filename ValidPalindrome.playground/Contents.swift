@@ -1,11 +1,26 @@
-// Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
-// Note: For the purpose of this problem, we define empty string as valid palindrome.
-// Example 1:
-// Input: "A man, a plan, a canal: Panama"
-// Output: true
-// Example 2:
-// Input: "race a car"
-// Output: false
+/*
+ 
+ tags:Facebook
+ 
+ 125. Valid Palindrome
+ 
+ Given a string s, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+
+ Example 1:
+ Input: s = "A man, a plan, a canal: Panama"
+ Output: true
+ Explanation: "amanaplanacanalpanama" is a palindrome.
+ 
+ Example 2:
+ Input: s = "race a car"
+ Output: false
+ Explanation: "raceacar" is not a palindrome.
+  
+ Constraints:
+ 1 <= s.length <= 2 * 105
+ s consists only of printable ASCII characters.
+ 
+ */
 
 var s = "A man, a plan, a canal: Panama"
 
@@ -13,11 +28,10 @@ func isPalindrome(_ s: String) -> Bool {
     var i: Int = 0
     var j: Int = 1
     var isPalindrome: Bool = true
+    let sArr: [Character] = Array(s)
     while i + j <= s.count {
-        let leftIndex = s.index(s.startIndex, offsetBy: i)
-        let rightIndex = s.index(s.endIndex, offsetBy: -j)
-        let left = s[leftIndex]
-        let right = s[rightIndex]
+        let left = sArr[i]
+        let right = sArr[s.count - j]
         if !(left.isLetter || left.isNumber) {
             i += 1
             continue
