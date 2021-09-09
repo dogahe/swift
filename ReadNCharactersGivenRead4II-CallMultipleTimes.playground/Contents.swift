@@ -1,6 +1,7 @@
 /*
  
  tags:Google
+ tags:Facebook
  
  158. Read N Characters Given Read4 II - Call multiple times
  
@@ -111,7 +112,7 @@ class Solution : Reader4 {
                 ptr += 1
                 buffPtr += 1
             }
-            if buffPtr >= buffCount {
+            if buffPtr == buffCount {
                 buffPtr = 0
             }
         }
