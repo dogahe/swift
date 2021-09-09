@@ -1,5 +1,7 @@
 /*
  
+ tags:Facebook
+ 
  157. Read N Characters Given Read4
  
  Given a file and assume that you can only read the file using a given method read4, implement a method to read n characters.
@@ -89,9 +91,9 @@ class Solution : Reader4 {
      */
     func read(_ buf: inout [Character], _ n: Int) -> Int {
         var ptr = 0
-        var buffPtr = 0
         var buff: [Character] = Array(repeating: "-", count: 4)
         while ptr < n {
+            var buffPtr = 0
             let buffCount = read4(&buff)
             if buffCount == 0 {
                 break
@@ -100,9 +102,6 @@ class Solution : Reader4 {
                 buf[ptr] = buff[buffPtr]
                 ptr += 1
                 buffPtr += 1
-            }
-            if buffPtr >= buffCount {
-                buffPtr = 0
             }
         }
         return ptr
