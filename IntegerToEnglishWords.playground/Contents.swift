@@ -1,6 +1,8 @@
 
 /*
  
+ tags:Facebook
+ 
  273. Integer to English Words
  
  Convert a non-negative integer num to its English words representation.
@@ -86,5 +88,18 @@ func simpleNumToWord(_ num: Int) -> String? {
     return nil
 }
 
-let num = 1829819998
+let num = 123
 numberToWords(num)
+
+let num3 = 12345
+numberToWords(num3)
+
+let num2 = 1829819998
+numberToWords(num2)
+
+let num4 = 1234567
+numberToWords(num4)
+
+let num5 = 1000010
+numberToWords(num5)
+
