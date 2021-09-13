@@ -22,6 +22,7 @@
  0 <= k <= 50
  
  */
+
 func lengthOfLongestSubstringKDistinct(_ s: String, _ k: Int) -> Int {
     let sArr: [Character] = Array(s)
     var dc = 0
