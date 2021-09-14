@@ -65,7 +65,6 @@ func matchingPairs(s: String, t: String) -> Int {
         }
     }
     
-    
     if matchCount == s.count - 1 {
         let onlyOneUnmatched = unmatched.first!
         let s1 = String(onlyOneUnmatched.first!)
@@ -129,6 +128,11 @@ let expected2 = 2
 let output2 = matchingPairs(s: s2, t: t2)
 check(expected: expected2, output: output2)
     
+let s3 = "abce"
+let t3 = "abdc"
+let expected3 = 3
+let output3 = matchingPairs(s: s3, t: t3)
+check(expected: expected3, output: output3)
 // Add your own test cases here
 
 
