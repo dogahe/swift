@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Facebook
+ 
  199. Binary Tree Right Side View
 
  Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
@@ -16,16 +19,12 @@
  Input: root = []
  Output: []
   
-
  Constraints:
 
  The number of nodes in the tree is in the range [0, 100].
  -100 <= Node.val <= 100
  
  */
-
-
-
 
 public class TreeNode {
     public var val: Int
@@ -40,7 +39,8 @@ public class TreeNode {
     }
 }
 
-
+// More memory since it keeps all elements at each level
+/*
 func rightSideView(_ root: TreeNode?) -> [Int] {
     var levels: [[Int]] = []
     helper(root, 0, &levels)
@@ -52,18 +52,39 @@ func rightSideView(_ root: TreeNode?) -> [Int] {
     return output
 }
 
-    func helper(_ node: TreeNode?, _ level: Int, _ levels: inout [[Int]]) {
-        if node == nil {
-            return
-        }
-        if levels.count == level {
-            levels.append([])
-        }
-        levels[level].append(node!.val)
-        helper(node!.left, level + 1, &levels)
-        helper(node!.right, level + 1, &levels)
+func helper(_ node: TreeNode?, _ level: Int, _ levels: inout [[Int]]) {
+    if node == nil {
+        return
     }
+    if levels.count == level {
+        levels.append([])
+    }
+    levels[level].append(node!.val)
+    helper(node!.left, level + 1, &levels)
+    helper(node!.right, level + 1, &levels)
+}
+*/
 
+// Less memory since it does not keep all elements at each level
+
+func rightSideView(_ root: TreeNode?) -> [Int] {
+    var levels: [Int] = []
+    helper(root, 0, &levels)
+    return levels
+}
+
+func helper(_ node: TreeNode?, _ level: Int, _ levels: inout [Int]) {
+    if node == nil {
+        return
+    }
+    if levels.count == level {
+        levels.append(node!.val)
+    } else {
+        levels[level] = node!.val
+    }
+    helper(node!.left, level + 1, &levels)
+    helper(node!.right, level + 1, &levels)
+}
 
 let tree = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3, TreeNode(6), TreeNode(7)))
 let tree2 = TreeNode(1, TreeNode(2, nil, TreeNode(5)), TreeNode(3, nil, TreeNode(4)))

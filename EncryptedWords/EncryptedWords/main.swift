@@ -6,6 +6,8 @@
 //
 /*
  
+ tags:Facebook
+ 
  Encrypted Words
  You've devised a simple encryption method for alphabetic strings that shuffles the characters in such a way that the resulting string is hard to quickly read, but is easy to convert back into the original string.
  When you encrypt a string S, you start with an initially-empty resulting string R and append characters to it as follows:
@@ -46,6 +48,31 @@ func findEncryptedWord(s: String) -> String {
     return str
 }
 
+// These are the tests we use to determine if the solution is correct.
+// You can add your own at the bottom, but they are otherwise not editable!
 
-let S = "abcxcba"
-print(findEncryptedWord(s: S))
+var test_case_number = 1
+func check(expected: String, output: String) {
+    let result = expected == output
+    let rightTick = "\u{2713}"
+    let wrongTick = "\u{2717}"
+    if result {
+        print("\(rightTick) Test #\(test_case_number)")
+    } else {
+        print("\(wrongTick) Test # \(test_case_number): Expected \(expected) Your output: \(output)")
+    }
+    test_case_number += 1
+}
+
+let s1 = "abc"
+let expected1 = "bac"
+let output1 = findEncryptedWord(s: s1)
+check(expected: expected1, output: output1)
+
+let s2 = "abcd"
+let expected2 = "bacd"
+let output2 = findEncryptedWord(s: s2)
+check(expected: expected2, output: output2)
+
+// Add your own test cases here
+
