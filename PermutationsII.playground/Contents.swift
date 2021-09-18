@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Facebook
+ 
  Permutations II
  
  Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
@@ -20,6 +23,7 @@
  1 <= nums.length <= 8
  -10 <= nums[i] <= 10
  */
+
 import Foundation
 
 func permuteUnique(_ nums: [Int]) -> [[Int]] {
@@ -31,13 +35,12 @@ func permuteUnique(_ nums: [Int]) -> [[Int]] {
             dict[num] =  dict[num]! + 1
         }
     }
-    var output: [Int] = []
     var results: Set<[Int]> = []
-    doPermute(output: &output, dict: &dict, length: nums.count, results: &results)
+    doPermute(output: [], dict: &dict, length: nums.count, results: &results)
     return Array(results)
 }
 
-func doPermute(output: inout [Int], dict: inout [Int:Int], length: Int, results: inout Set<[Int]>) {
+func doPermute(output: [Int], dict: inout [Int:Int], length: Int, results: inout Set<[Int]>) {
     if output.count == length {
         results.insert(output)
         return
@@ -46,10 +49,10 @@ func doPermute(output: inout [Int], dict: inout [Int:Int], length: Int, results:
         if value == 0 {
             continue
         }
-        output.append(key)
+        var newOutput = output
+        newOutput.append(key)
         dict[key] = value - 1
-        doPermute(output: &output, dict: &dict, length: length, results: &results)
-        output = output.dropLast()
+        doPermute(output: newOutput, dict: &dict, length: length, results: &results)
         dict[key] = value
     }
 }

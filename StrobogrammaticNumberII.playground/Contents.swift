@@ -1,6 +1,7 @@
 /*
  
  tags:Google
+ tags:Facebook
  
 247. Strobogrammatic Number II
 
@@ -47,4 +48,4 @@ func findStrobogrammatic(_ n: Int, _ m: Int) -> [String] {
     }
 }
 
-print(findStrobogrammatic(5))
+print(findStrobogrammatic(3))

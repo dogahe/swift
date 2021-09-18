@@ -6,6 +6,9 @@
 //
 
 /*
+ 
+ tags:Facebook
+ 
  785. Is Graph Bipartite?
  
  There is an undirected graph with n nodes, where each node is numbered between 0 and n - 1. You are given a 2D array graph, where graph[u] is an array of nodes that node u is adjacent to. More formally, for each v in graph[u], there is an undirected edge between node u and node v. The graph has the following properties:
@@ -38,23 +41,28 @@
  graph[u] does not contain u.
  All the values of graph[u] are unique.
  If graph[u] contains v, then graph[v] contains u.
+ 
+ 
+ Solution:
+ 
  */
 
+/*
 func isBipartite(_ graph: [[Int]]) -> Bool {
     var seen: [Int:Int] = [:]
     for i in 0 ..< graph.count {
         if seen[i] == nil {
             seen[i] = 0
-            var stack: [Int] = [i]
-            while !stack.isEmpty {
-                let curr = stack.removeLast()
+            var queue: [Int] = [i]
+            while !queue.isEmpty {
+                let curr = queue.removeFirst()
                 for neighbor in graph[curr] {
                     if let val = seen[neighbor] {
                         if val == seen[curr] {
                             return false
                         }
                     } else {
-                        stack.append(neighbor)
+                        queue.append(neighbor)
                         seen[neighbor] = seen[curr] == 0 ? 1 : 0
                     }
                 }
@@ -63,7 +71,31 @@ func isBipartite(_ graph: [[Int]]) -> Bool {
     }
     return true
 }
+*/
 
+func isBipartite(_ graph: [[Int]]) -> Bool {
+    var color: [Int] = Array(repeating: 0, count: graph.count)
+    for i in 0 ..< graph.count {
+        if color[i] == 0 {
+            color[i] = 1
+            var queue: [Int] = [i]
+            while !queue.isEmpty {
+                let curr = queue.removeFirst()
+                for neighbor in graph[curr] {
+                    if color[neighbor] == 0 {
+                        queue.append(neighbor)
+                        color[neighbor] = color[curr] == 1 ? 2 : 1
+                    } else {
+                        if color[curr] == color[neighbor] {
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return true
+}
 let graph1 = [[1,2,3],[0,2],[0,1,3],[0,2]]
 print(isBipartite(graph1))
 

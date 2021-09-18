@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Facebook
+ 
  78. Subsets
  
  Given an integer array nums of unique elements, return all possible subsets (the power set).
@@ -21,6 +24,7 @@
  All the numbers of nums are unique.
  
  */
+
 import Foundation
 
 func subsets(_ nums: [Int]) -> [[Int]] {
@@ -40,7 +44,7 @@ func dfs(_ nums: [Int], _ result: inout [[Int]], _ subset: [Int]) {
     dfs(nums.suffix(nums.count - 1), &result, newSubset)
 }
 
-let nums = [1,2,3,4]
+let nums = [1,2,3]
 
 
 let powerSet = subsets(nums)

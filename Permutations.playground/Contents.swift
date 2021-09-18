@@ -1,4 +1,7 @@
 /*
+ 
+ tags:Facebook
+ 
  46. Permutations
  
  Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
@@ -37,16 +40,15 @@ func dfs(_ nums: [Int], _ permutation: [Int], _ result: inout [[Int]]) {
         return
     }
     for i in 0 ..< nums.count {
-        let num = nums[i]
         var newNums = nums
-        newNums.remove(at: i)
+        let num = newNums.remove(at: i)
         var newPermutation = permutation
         newPermutation.append(num)
         dfs(newNums, newPermutation, &result)
     }
 }
 
-let nums = [1,2,3, 4]
+let nums = [1,2,3]
 let permutes = permute(nums)
 print(permutes)
 
