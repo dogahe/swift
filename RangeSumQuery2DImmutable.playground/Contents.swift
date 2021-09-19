@@ -1,5 +1,7 @@
 /*
  
+ tags:Facebook
+ 
  304. Range Sum Query 2D - Immutable
  
  Given a 2D matrix matrix, handle multiple queries of the following type:
@@ -35,6 +37,7 @@
  At most 104 calls will be made to sumRegion.
  
  */
+
 class NumMatrix {
 
     var matrix: [[Int]]
