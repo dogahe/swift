@@ -61,3 +61,6 @@ longestValidParentheses(s2)
 
 let s3 = ""
 longestValidParentheses(s3)
+
+let s4 = "())((())"
+longestValidParentheses(s4)
