@@ -1,5 +1,7 @@
 /*
  
+ tags:Google
+ 
  37. Sudoku Solver
  
  Write a program to solve a Sudoku puzzle by filling the empty cells.
@@ -62,6 +64,7 @@ func convert(_ board: [[Int]]) -> [[Character]] {
 }
 
 func solveIntSudoku(_ board: inout [[Int]]) -> Bool {
+    // Check if there is any unfilled square left
     var row = -1
     var col = -1
     for i in 0 ..< board.count {
@@ -76,6 +79,7 @@ func solveIntSudoku(_ board: inout [[Int]]) -> Bool {
     if row == -1 && col == -1 {
         return true
     }
+    // For the unfilled sqaure found, try all numbers 1 ... 9
     for num in 1 ... board.count {
         if isSafe(row, col, num, board) {
             board[row][col] = num

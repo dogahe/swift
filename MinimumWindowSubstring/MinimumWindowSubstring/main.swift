@@ -12,7 +12,6 @@
  
  76. Minimum Window Substring
  
- 
  Given two strings s and t of lengths m and n respectively, return the minimum window in s which will contain all the characters in t. If there is no such window in s that covers all characters in t, return the empty string "".
 
  Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.
@@ -45,11 +44,11 @@ func minWindow(_ s: String, _ t: String) -> String {
             dictT[c] = 1
         }
     }
-    
     let requiredMatches = dictT.count
+    
     var l = 0, r = 0, matches = 0
     var dictW: [Character:Int] = [:]
-    var window: [Int] = [-1, 0, 0]
+    var window: [Int] = [-1, 0, 0] // Length, Left, Right
     
     let sArr: [Character] = Array(s)
     while r < sArr.count {
