@@ -6,6 +6,9 @@
 //
 
 /**
+ 
+ tags:Facebook
+ 
  211. Design Add and Search Words Data Structure
  Design a data structure that supports adding new words and finding if a string matches any previously added string.
 
@@ -103,6 +106,60 @@ class WordDictionary {
         return false
     }
 }
+
+
+/*
+class TrieNode {
+    var children: [Character: TrieNode] = [:]
+    var word: Bool = false
+}
+
+class WordDictionary {
+    var trie: TrieNode
+    init() {
+        trie = TrieNode()
+    }
+    
+    func addWord(_ word: String) {
+        var node = trie
+        for i in 0 ..< word.count {
+            let index = word.index(word.startIndex, offsetBy: i)
+            let char = word[index]
+            if node.children[char] == nil {
+                node.children[char] = TrieNode()
+            }
+            node = node.children[char]!
+        }
+        node.word = true
+    }
+    
+    func searchInNode(_ word: String, _ node: inout TrieNode) -> Bool {
+        for i in 0 ..< word.count {
+            let index = word.index(word.startIndex, offsetBy: i)
+            let char = word[index]
+            if let val = node.children[char] {
+                node = val
+            } else {
+                if char == "." {
+                    for x in node.children.keys {
+                        var child = node.children[x]!
+                        if searchInNode(String(word.suffix(word.count - i - 1)), &child) {
+                            return true
+                        }
+                    }
+                }
+                return false
+            }
+        }
+        return node.word
+    }
+    
+    /** Returns if the word is in the trie. */
+    func search(_ word: String) -> Bool {
+        return searchInNode(word, &trie)
+    }
+}
+*/
 
 let obj = WordDictionary()
 obj.addWord("badass")
