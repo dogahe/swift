@@ -1,6 +1,7 @@
 /*
  
  tags:Google
+ tags:Facebook
  
  380. Insert Delete GetRandom O(1)
  
@@ -13,7 +14,6 @@
  
  
  Example 1:
- 
  Input
  ["RandomizedSet", "insert", "remove", "insert", "getRandom", "remove", "insert", "getRandom"]
  [[], [1], [2], [2], [], [1], [2], []]
