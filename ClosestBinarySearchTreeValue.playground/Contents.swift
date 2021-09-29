@@ -1,5 +1,7 @@
 /*
  
+ tags:Facebook
+ 
  270. Closest Binary Search Tree Value
  
  Given a non-empty binary search tree and a target value, find the value in the BST that is closest to the target.
@@ -35,24 +37,24 @@ public class TreeNode {
     }
 }
 
-func closestValue(_ root: TreeNode, _ target: Float) -> Int {
+func closestValue(_ root: TreeNode, _ target: Double) -> Int {
     var closest: Int?
     helper(root, &closest, target)
     return closest!
 }
 
-func helper(_ node: TreeNode?, _ closest: inout Int?, _ target: Float) {
+func helper(_ node: TreeNode?, _ closest: inout Int?, _ target: Double) {
     if node == nil {
         return
     }
     if closest != nil {
-        if abs(target - Float(node!.val)) < abs(target - Float(closest!)) {
+        if abs(target - Double(node!.val)) < abs(target - Double(closest!)) {
             closest = node!.val
         }
     } else {
         closest = node!.val
     }
-    if target < Float(node!.val) {
+    if target < Double(node!.val) {
         helper(node!.left, &closest, target)
     } else {
         helper(node!.right, &closest, target)
